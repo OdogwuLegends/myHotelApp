@@ -1,0 +1,12 @@
+package africa.semicoon.LegendaryHotels.repositories;
+
+import africa.semicoon.LegendaryHotels.models.Customer;
+
+import java.util.List;
+
+public interface ICustomer {
+    Customer saveCustomer(Customer newCustomer);
+    Customer getCustomerByEmail(String email);
+    List<Customer> getAllCustomers();
+    void deleteByEmail(String email);
+}

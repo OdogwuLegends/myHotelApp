@@ -24,8 +24,7 @@ public class Trial {
 //        System.out.println(showNumbers());
 //        System.out.println(Arrays.toString(showAllRoom()));
 //        printFreeRooms();
-
-        String word = "HelloMyNameIsLegends";
+        
 
 
     }

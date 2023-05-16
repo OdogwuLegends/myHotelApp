@@ -1,17 +1,15 @@
-package africa.semicoon.LegendaryHotels.services;
+package africa.semicoon.LegendaryHotels.trials;
 
 import africa.semicoon.LegendaryHotels.exceptions.InvalidRoomNumberException;
 import africa.semicoon.LegendaryHotels.exceptions.RoomUnavailableException;
-import africa.semicoon.LegendaryHotels.trials.IRoomRep;
-import africa.semicoon.LegendaryHotels.trials.RepositoryForSingleRooms;
 
-public class ServiceForSingleRooms implements IRoomServ{
+public class ServiceForDoubleRooms implements IRoomServ{
+    private final IRoomRep repositoryForDoubleRooms = new RepositoryForDoubleRooms();
 
-    private final IRoomRep repositoryForSingleRooms = new RepositoryForSingleRooms();
     @Override
     public String bookRoom(int choice) {
         try{
-            return repositoryForSingleRooms.bookRoom(choice);
+            return repositoryForDoubleRooms.bookRoom(choice);
         }
         catch (InvalidRoomNumberException | RoomUnavailableException ex){
             System.err.println(ex.getMessage());
@@ -21,16 +19,16 @@ public class ServiceForSingleRooms implements IRoomServ{
 
     @Override
     public String checkOut(int choice) {
-        return repositoryForSingleRooms.checkOut(choice);
+        return repositoryForDoubleRooms.checkOut(choice);
     }
 
     @Override
     public String printBookedRooms() {
-        return repositoryForSingleRooms.printBookedRooms();
+        return repositoryForDoubleRooms.printBookedRooms();
     }
 
     @Override
     public String printAvailableRooms() {
-        return repositoryForSingleRooms.printAvailableRooms();
+        return repositoryForDoubleRooms.printAvailableRooms();
     }
 }

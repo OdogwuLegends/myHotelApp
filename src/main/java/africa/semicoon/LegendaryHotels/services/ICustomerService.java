@@ -10,8 +10,8 @@ import africa.semicoon.LegendaryHotels.models.Customer;
 import java.util.List;
 
 public interface ICustomerService {
-    CustomerRegistrationResponse saveCustomer(CustomerRequest newCustomer);
-    GetEmailResponse getCustomerByEmail(String email);
-    DeleteResponse deleteByEmail(CustomerRequest newCustomerRequest);
+    CustomerRegistrationResponse saveCustomer(CustomerRequest newCustomer) throws InvalidEmailException;
+    GetEmailResponse getCustomerByEmail(String email) throws InvalidEmailException ;
+    DeleteResponse deleteByEmail(CustomerRequest newCustomerRequest) throws InvalidEmailException;
     List<Customer> getAllCustomers();
 }

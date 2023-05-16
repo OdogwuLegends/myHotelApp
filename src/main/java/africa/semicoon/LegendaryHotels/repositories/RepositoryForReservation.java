@@ -1,7 +1,5 @@
 package africa.semicoon.LegendaryHotels.repositories;
 
-import africa.semicoon.LegendaryHotels.exceptions.InvalidRoomNumberException;
-import africa.semicoon.LegendaryHotels.exceptions.RoomUnavailableException;
 import africa.semicoon.LegendaryHotels.models.Customer;
 import africa.semicoon.LegendaryHotels.models.Reservation;
 import africa.semicoon.LegendaryHotels.models.Room;
@@ -30,7 +28,7 @@ public class RepositoryForReservation implements IReservationRepository {
     }
 
     @Override
-    public String reserveARoom(Reservation customerReservation, RoomType roomType, int roomNumberChoice) throws RoomUnavailableException {
+    public String reserveARoom(Reservation customerReservation, RoomType roomType, int roomNumberChoice) {
         if(roomType == RoomType.SINGLE){ bookSingleRoom(roomNumberChoice); }
         else { bookDoubleRoom(roomNumberChoice); }
         reservations.add(customerReservation);
@@ -38,9 +36,9 @@ public class RepositoryForReservation implements IReservationRepository {
     }
 
     @Override
-    public Reservation getRoom(int roomNumber) {
+    public Room getRoom(int roomNumber) {
         for (Reservation reservedRoom : reservations){
-            if (Objects.equals(reservedRoom.getRoom().getRoomNumber(),roomNumber)) return reservedRoom;
+            if (Objects.equals(reservedRoom.getRoom().getRoomNumber(),roomNumber)) return reservedRoom.getRoom();
         }
         return null;
     }
@@ -54,7 +52,7 @@ public class RepositoryForReservation implements IReservationRepository {
     }
 
     @Override
-    public Reservation checkOut(Date checkInDate, Date checkOutDate)throws InvalidRoomNumberException {
+    public Reservation checkOut(Date checkInDate, Date checkOutDate) {
         RoomType roomType = null;
         int roomNumberChoice = 0;
         for (Reservation customerReservation : reservations){
@@ -80,13 +78,7 @@ public class RepositoryForReservation implements IReservationRepository {
     }
 
 
-    private String bookSingleRoom(int choice) throws RoomUnavailableException {
-        if(choice < 1 || choice > 10){
-            throw new InvalidRoomNumberException("Invalid Room Number Selected.");
-        }
-        if(rooms[choice -1] == 1){
-            throw new RoomUnavailableException("Room " + choice + " is already booked.");
-        }
+    private String bookSingleRoom(int choice) {
         rooms[choice - 1] = 1;
         roomNumber = choice;
         Room room = new Room();
@@ -96,13 +88,7 @@ public class RepositoryForReservation implements IReservationRepository {
     }
 
 
-    private String bookDoubleRoom(int choice) throws RoomUnavailableException {
-        if(choice < 11 || choice > rooms.length){
-            throw new InvalidRoomNumberException("Invalid Room Number Selected.");
-        }
-        if(rooms[choice -1] == 1){
-            throw new RoomUnavailableException("Room " + choice + " is already booked.");
-        }
+    private String bookDoubleRoom(int choice) {
         rooms[choice - 1] = 1;
         roomNumber = choice;
         Room room = new Room();
@@ -112,35 +98,29 @@ public class RepositoryForReservation implements IReservationRepository {
     }
 
 
-    private String checkOutSingleRoom(int choice) throws InvalidRoomNumberException{
-        if(choice < 1 || choice > 10){
-            throw new InvalidRoomNumberException("Invalid Room Number Selected.");
-        }
+    private String checkOutSingleRoom(int choice) {
+
         if(rooms[choice -1] == 1){
             rooms[choice -1] = 0;
             roomNumber = 0;
             Room room = new Room();
             room.setRoomNumber(roomNumber);
             room.setPrice(0);
-            return "Room " + choice + " checkout Successful. Thank you for your patronage.";
         }
-        return "Room " + choice + " not booked previously.";
+        return "Room " + choice + " checkout Successful. Thank you for your patronage.";
     }
 
 
     private String checkOutDoubleRoom(int choice) {
-        if(choice < 11 || choice > rooms.length){
-            throw new InvalidRoomNumberException("Invalid Room Number Selected.");
-        }
+
         if(rooms[choice -1] == 1){
             rooms[choice -1] = 0;
             roomNumber = 0;
             Room room = new Room();
             room.setRoomNumber(roomNumber);
             room.setPrice(0);
-            return "Room " + choice + " checkout Successful. Thank you for your patronage.";
         }
-        return "Room " + choice + " not booked previously.";
+        return "Room " + choice + " checkout Successful. Thank you for your patronage.";
     }
 
 
@@ -190,5 +170,28 @@ public class RepositoryForReservation implements IReservationRepository {
         }
         return "Available Double Rooms are " + availableRooms;
     }
+    public List<Integer> listOfBookedSingleRooms(){
+        List<Integer> bookedSingleRooms = new ArrayList<>();
+
+        for (int i = 1; i <= 10; i++) {
+            if(rooms[i - 1] == 1){
+                bookedSingleRooms.add(i);
+            }
+        }
+
+        return bookedSingleRooms;
+    }
+
+    public List<Integer> listOfBookedDoubleRooms(){
+        List<Integer> bookedDoubleRooms = new ArrayList<>();
+
+        for (int i = 11; i <= rooms.length; i++) {
+            if(rooms[i - 1] == 1){
+               bookedDoubleRooms.add(i);
+            }
+        }
+        return bookedDoubleRooms;
+    }
+
 
 }

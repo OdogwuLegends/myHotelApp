@@ -1,4 +1,4 @@
-package africa.semicoon.LegendaryHotels.services;
+package africa.semicoon.LegendaryHotels.trials;
 
 public interface IRoomServ {
     String bookRoom(int choice);

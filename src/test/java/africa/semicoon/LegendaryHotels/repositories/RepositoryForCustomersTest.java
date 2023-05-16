@@ -10,7 +10,7 @@ import static africa.semicoon.LegendaryHotels.utils.AppUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RepositoryForCustomersTest {
-    private final ICustomer iCustomer = new RepositoryForCustomers();
+    private final ICustomerRepository iCustomerRepository = new RepositoryForCustomers();
     private Customer firstCustomer;
     private Customer secondCustomer;
     private Customer thirdCustomer;
@@ -20,30 +20,30 @@ class RepositoryForCustomersTest {
         firstCustomer = buildFirstCustomer();
         secondCustomer = buildSecondCustomer();
         thirdCustomer = buildThirdCustomer();
-        iCustomer.saveCustomer(firstCustomer);
-        iCustomer.saveCustomer(secondCustomer);
-        iCustomer.saveCustomer(thirdCustomer);
+        iCustomerRepository.saveCustomer(firstCustomer);
+        iCustomerRepository.saveCustomer(secondCustomer);
+        iCustomerRepository.saveCustomer(thirdCustomer);
     }
 
     @Test
     void testToSaveCustomer(){
         assertNotNull(firstCustomer);
         assertNotNull(firstCustomer.getFirstName());
-        List<Customer> customerList = iCustomer.getAllCustomers();
+        List<Customer> customerList = iCustomerRepository.getAllCustomers();
         int actual = customerList.size();
         assertEquals(THREE, actual);
         assertNotNull(thirdCustomer.getFirstName());
     }
     @Test
     void testToGetCustomerByEmail(){
-        Customer foundCustomer = iCustomer.getCustomerByEmail(firstCustomer.getEmail());
+        Customer foundCustomer = iCustomerRepository.getCustomerByEmail(firstCustomer.getEmail());
         assertNotNull(foundCustomer);
         assertEquals(firstCustomer.getEmail(),foundCustomer.getEmail());
         assertSame(foundCustomer, firstCustomer);
     }
     @Test
     void testToGetAllCustomers(){
-        List<Customer> customerList = iCustomer.getAllCustomers();
+        List<Customer> customerList = iCustomerRepository.getAllCustomers();
         int actual = customerList.size();
         assertEquals(THREE,actual);
         assertNotNull(secondCustomer.getLastName());
@@ -53,8 +53,8 @@ class RepositoryForCustomersTest {
 
     @Test
     void testToDeleteByEmail(){
-        iCustomer.deleteByEmail(secondCustomer.getEmail());
-        List<Customer> customerList = iCustomer.getAllCustomers();
+        iCustomerRepository.deleteByEmail(secondCustomer.getEmail());
+        List<Customer> customerList = iCustomerRepository.getAllCustomers();
         int actual = customerList.size();
         assertEquals(TWO,actual);
     }

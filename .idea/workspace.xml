@@ -5,41 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9daf9b11-0725-454d-87fe-f4fb5e54cc4a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/services/IReservationService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/trials/IRoomRep.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/trials/PseudoMain.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/AprilHotels/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/UserInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/AprilHotels/controller/ReservationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/controller/ReservationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/AprilHotels/dto/requests/ReservationRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/dto/requests/ReservationRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/AprilHotels/dto/response/ReservationResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/dto/response/ReservationResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/AprilHotels/exceptions/InvalidRoomNumberException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/exceptions/InvalidRoomNumberException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/AprilHotels/exceptions/RoomUnavailableException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/exceptions/RoomUnavailableException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/AprilHotels/models/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/models/Customer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/AprilHotels/models/Reservation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/models/Reservation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/AprilHotels/models/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/models/Room.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/AprilHotels/models/RoomType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/models/RoomType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/AprilHotels/repositories/ICustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/repositories/ICustomer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/AprilHotels/repositories/IReservationRep.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/trials/IReservationRep.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/AprilHotels/repositories/IRoom.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/AprilHotels/repositories/RepositoryForCustomers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/repositories/RepositoryForCustomers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/AprilHotels/repositories/RepositoryForDoubleRooms.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/trials/RepositoryForDoubleRooms.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/AprilHotels/repositories/RepositoryForReservation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/trials/RepositoryForReservation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/AprilHotels/repositories/RepositoryForSingleRooms.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/trials/RepositoryForSingleRooms.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/AprilHotels/services/IReservationServ.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/AprilHotels/services/ReservationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/services/ReservationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/AprilHotels/trials/IRes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/trials/IRes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/AprilHotels/trials/PseudoMain.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/AprilHotels/trials/RepoForReservations.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/trials/RepoForReservations.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/AprilHotels/trials/RepositoryForRooms.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/trials/RepositoryForRooms.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/AprilHotels/trials/Trial.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/trials/Trial.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/AprilHotels/trials/Trials2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/trials/Trials2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/AprilHotels/trials/Trials3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/trials/Trials3.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/AprilHotels/utils/AppUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/utils/AppUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/AprilHotels/utils/Display.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/utils/Display.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/AprilHotels/utils/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/utils/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/africa/semicoon/AprilHotels/repositories/RepositoryForCustomersTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/africa/semicoon/LegendaryHotels/repositories/RepositoryForCustomersTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/africa/semicoon/AprilHotels/repositories/RepositoryForRoomsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/africa/semicoon/LegendaryHotels/repositories/RepositoryForRoomsTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/controller/ReservationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/controller/ReservationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/models/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/models/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/repositories/ICustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/repositories/ICustomerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/repositories/IReservation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/repositories/IReservationRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/repositories/RepositoryForCustomers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/repositories/RepositoryForCustomers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/repositories/RepositoryForReservation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/repositories/RepositoryForReservation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/services/ReservationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/services/ServiceForReservation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/utils/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicoon/LegendaryHotels/utils/Map.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/africa/semicoon/LegendaryHotels/repositories/RepositoryForCustomersTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/africa/semicoon/LegendaryHotels/repositories/RepositoryForCustomersTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,25 +43,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.go.format.on.save.advertiser.fired": "true",
-    "RunOnceActivity.go.formatter.settings.were.checked": "true",
-    "RunOnceActivity.go.migrated.go.modules.settings": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "go.import.settings.migrated": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.format.on.save.advertiser.fired&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="africa.semicoon.LegendaryHotels.dto.requests" />
+    </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
@@ -94,7 +72,7 @@
       <recent name="africa.semicoon.AprilHotels.repositories" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.PseudoMain">
+  <component name="RunManager" selected="Application.Trial5">
     <configuration name="PseudoMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="africa.semicoon.LegendaryHotels.trials.PseudoMain" />
       <module name="HotelReservationApp" />
@@ -108,8 +86,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="RepositoryForRooms" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="africa.semicoon.AprilHotels.trials.RepositoryForRooms" />
+    <configuration name="Trial" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="africa.semicoon.LegendaryHotels.trials.Trial" />
       <module name="HotelReservationApp" />
       <extension name="coverage">
         <pattern>
@@ -121,8 +99,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Trial" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="africa.semicoon.LegendaryHotels.trials.Trial" />
+    <configuration name="Trial5" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="africa.semicoon.LegendaryHotels.trials.Trial5" />
       <module name="HotelReservationApp" />
       <extension name="coverage">
         <pattern>
@@ -162,11 +140,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Trial5" />
         <item itemvalue="Application.PseudoMain" />
         <item itemvalue="Application.UserInterface" />
         <item itemvalue="Application.Trials2" />
         <item itemvalue="Application.Trial" />
-        <item itemvalue="Application.RepositoryForRooms" />
       </list>
     </recent_temporary>
   </component>
@@ -178,7 +156,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1683985341988</updated>
-      <workItem from="1683985343923" duration="72815000" />
+      <workItem from="1683985343923" duration="77886000" />
+      <workItem from="1684234548432" duration="13716000" />
     </task>
     <servers />
   </component>

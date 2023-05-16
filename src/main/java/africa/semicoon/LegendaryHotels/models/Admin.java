@@ -3,9 +3,10 @@ package africa.semicoon.LegendaryHotels.models;
 import lombok.Data;
 
 @Data
-public class Customer {
+public class Admin {
     private String firstName;
     private String lastName;
     private String email;
     private String password;
+    private int adminLoginCode;
 }

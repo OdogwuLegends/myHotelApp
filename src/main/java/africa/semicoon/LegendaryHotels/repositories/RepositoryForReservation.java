@@ -1,6 +1,5 @@
 package africa.semicoon.LegendaryHotels.repositories;
 
-import africa.semicoon.LegendaryHotels.dto.requests.ReservationRequest;
 import africa.semicoon.LegendaryHotels.exceptions.InvalidRoomNumberException;
 import africa.semicoon.LegendaryHotels.exceptions.RoomUnavailableException;
 import africa.semicoon.LegendaryHotels.models.Customer;
@@ -16,7 +15,7 @@ import java.util.Objects;
 import static africa.semicoon.LegendaryHotels.utils.AppUtils.FIFTY_DOLLARS;
 import static africa.semicoon.LegendaryHotels.utils.AppUtils.TWENTY_DOLLARS;
 
-public class RepositoryForReservation implements IReservation {
+public class RepositoryForReservation implements IReservationRepository {
 
     private List<Reservation> reservations = new ArrayList<>();
     private int[] rooms = new int[20];

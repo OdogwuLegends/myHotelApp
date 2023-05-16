@@ -1,23 +1,20 @@
 package africa.semicoon.LegendaryHotels.services;
 
 import africa.semicoon.LegendaryHotels.dto.requests.ReservationRequest;
-import africa.semicoon.LegendaryHotels.dto.response.ReservationResponse;
 import africa.semicoon.LegendaryHotels.exceptions.InvalidRoomNumberException;
 import africa.semicoon.LegendaryHotels.exceptions.RoomUnavailableException;
-import africa.semicoon.LegendaryHotels.models.Customer;
 import africa.semicoon.LegendaryHotels.models.Reservation;
 import africa.semicoon.LegendaryHotels.models.RoomType;
-import africa.semicoon.LegendaryHotels.repositories.IReservation;
+import africa.semicoon.LegendaryHotels.repositories.IReservationRepository;
 import africa.semicoon.LegendaryHotels.repositories.RepositoryForReservation;
-import africa.semicoon.LegendaryHotels.trials.IReservationRep;
 import africa.semicoon.LegendaryHotels.utils.Map;
 
 import java.util.Date;
 import java.util.List;
 
-public class ReservationService implements IReservationService {
+public class ServiceForReservation implements IReservationService {
 
-    IReservation repositoryForReservation = new RepositoryForReservation();
+    IReservationRepository repositoryForReservation = new RepositoryForReservation();
     @Override
     public String findARoom(ReservationRequest customerReservation) {
         RoomType roomType = customerReservation.getRoomType();
@@ -51,7 +48,7 @@ public class ReservationService implements IReservationService {
 
     @Override
     public Reservation getCustomerReservation(ReservationRequest customerReservation) {
-        Customer newCustomer = customerReservation.getC
+        //Customer newCustomer = customerReservation.getC
         return null;
     }
 

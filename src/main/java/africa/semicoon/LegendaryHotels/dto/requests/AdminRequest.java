@@ -1,9 +1,9 @@
-package africa.semicoon.LegendaryHotels.models;
+package africa.semicoon.LegendaryHotels.dto.requests;
 
 import lombok.Data;
 
 @Data
-public class Customer {
+public class AdminRequest {
     private String firstName;
     private String lastName;
     private String email;

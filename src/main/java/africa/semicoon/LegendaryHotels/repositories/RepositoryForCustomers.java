@@ -20,9 +20,7 @@ public class RepositoryForCustomers implements ICustomerRepository {
     @Override
     public Customer getCustomerByEmail(String email) {
         for(Customer eachCustomer : customers){
-            if(!Objects.equals(eachCustomer.getEmail(),email)){
-                throw new InvalidEmailException("Customer does not exist.");
-            }else{ return eachCustomer; }
+            if(Objects.equals(eachCustomer.getEmail(),email)) return eachCustomer;
         }
         return null;
     }
@@ -36,6 +34,13 @@ public class RepositoryForCustomers implements ICustomerRepository {
     public void deleteByEmail(String email) {
         Customer foundCustomer = getCustomerByEmail(email);
         if(foundCustomer != null) customers.remove(foundCustomer);
+    }
+
+    public boolean verifyPassword(String password){
+        for(Customer foundPassword : customers){
+            if(Objects.equals(foundPassword.getPassword(),password)) return true;
+        }
+        return false;
     }
 
 }

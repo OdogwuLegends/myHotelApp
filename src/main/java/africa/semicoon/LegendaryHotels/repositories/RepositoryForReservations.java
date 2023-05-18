@@ -10,29 +10,28 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import static africa.semicoon.LegendaryHotels.utils.AppUtils.FIFTY_DOLLARS;
-import static africa.semicoon.LegendaryHotels.utils.AppUtils.TWENTY_DOLLARS;
-
-public class RepositoryForReservation implements IReservationRepository {
+public class RepositoryForReservations implements IReservationRepository {
 
     private List<Reservation> reservations = new ArrayList<>();
     private int[] rooms = new int[20];
-    private int roomNumber;
 
 
     @Override
     public String findARoom(RoomType roomType) {
-        if(roomType == RoomType.SINGLE){ printAvailableSingleRooms(); }
-        else { printAvailableDoubleRooms(); }
-        return "";
+        if(roomType == RoomType.SINGLE){ return printAvailableSingleRooms(); }
+        else { return printAvailableDoubleRooms(); }
     }
 
     @Override
-    public String reserveARoom(Reservation customerReservation, RoomType roomType, int roomNumberChoice) {
-        if(roomType == RoomType.SINGLE){ bookSingleRoom(roomNumberChoice); }
-        else { bookDoubleRoom(roomNumberChoice); }
-        reservations.add(customerReservation);
-        return "";
+    public String reserveARoom(Reservation customerReservation, RoomType roomType, int roomNumberChoice,int amount) {
+        if(roomType == RoomType.SINGLE){
+            reservations.add(customerReservation);
+            return bookSingleRoom(roomNumberChoice, amount);
+        }
+        else {
+            reservations.add(customerReservation);
+            return bookDoubleRoom(roomNumberChoice, amount);
+        }
     }
 
     @Override
@@ -78,23 +77,21 @@ public class RepositoryForReservation implements IReservationRepository {
     }
 
 
-    private String bookSingleRoom(int choice) {
+    private String bookSingleRoom(int choice, int amount) {
         rooms[choice - 1] = 1;
-        roomNumber = choice;
         Room room = new Room();
-        room.setRoomNumber(roomNumber);
-        room.setPrice(TWENTY_DOLLARS);
-        return "Room " + choice + " Booked Successfully";
+        room.setRoomNumber(choice);
+        room.setPrice(amount);
+        return "Room " + choice + " Booked Successfully\n";
     }
 
 
-    private String bookDoubleRoom(int choice) {
+    private String bookDoubleRoom(int choice, int amount) {
         rooms[choice - 1] = 1;
-        roomNumber = choice;
         Room room = new Room();
-        room.setRoomNumber(roomNumber);
-        room.setPrice(FIFTY_DOLLARS);
-        return "Room " + choice + " Booked Successfully";
+        room.setRoomNumber(choice);
+        room.setPrice(amount);
+        return "Room " + choice + " Booked Successfully\n";
     }
 
 
@@ -102,12 +99,11 @@ public class RepositoryForReservation implements IReservationRepository {
 
         if(rooms[choice -1] == 1){
             rooms[choice -1] = 0;
-            roomNumber = 0;
             Room room = new Room();
-            room.setRoomNumber(roomNumber);
+            room.setRoomNumber(0);
             room.setPrice(0);
         }
-        return "Room " + choice + " checkout Successful. Thank you for your patronage.";
+        return "Room " + choice + " checkout Successful. Thank you for your patronage.\n";
     }
 
 
@@ -115,12 +111,11 @@ public class RepositoryForReservation implements IReservationRepository {
 
         if(rooms[choice -1] == 1){
             rooms[choice -1] = 0;
-            roomNumber = 0;
             Room room = new Room();
-            room.setRoomNumber(roomNumber);
+            room.setRoomNumber(0);
             room.setPrice(0);
         }
-        return "Room " + choice + " checkout Successful. Thank you for your patronage.";
+        return "Room " + choice + " checkout Successful. Thank you for your patronage.\n";
     }
 
 
@@ -132,7 +127,7 @@ public class RepositoryForReservation implements IReservationRepository {
                 bookedRooms.append(", ");
             }
         }
-        return "Booked Single Rooms are " + bookedRooms;
+        return "Booked Single Rooms are " + bookedRooms + " \n";
     }
 
 
@@ -144,7 +139,7 @@ public class RepositoryForReservation implements IReservationRepository {
                 bookedRooms.append(", ");
             }
         }
-        return "Booked Double Rooms are " + bookedRooms;
+        return "Booked Double Rooms are " + bookedRooms + " \n";
     }
 
 
@@ -156,7 +151,7 @@ public class RepositoryForReservation implements IReservationRepository {
                 availableRooms.append(", ");
             }
         }
-        return "Available Single Rooms are " + availableRooms;
+        return "Available Single Rooms are " + availableRooms + " \n";
     }
 
 
@@ -168,7 +163,7 @@ public class RepositoryForReservation implements IReservationRepository {
                 availableRooms.append(", ");
             }
         }
-        return "Available Double Rooms are " + availableRooms;
+        return "Available Double Rooms are " + availableRooms + " \n";
     }
     public List<Integer> listOfBookedSingleRooms(){
         List<Integer> bookedSingleRooms = new ArrayList<>();
@@ -191,6 +186,16 @@ public class RepositoryForReservation implements IReservationRepository {
             }
         }
         return bookedDoubleRooms;
+    }
+
+    public List<Integer> showAllRooms(){
+        List<Integer> allRooms = new ArrayList<>();
+        for (int i = 1; i <= rooms.length; i++) {
+            if(rooms[i - 1] == 1 || rooms[i - 1] == 0){
+                allRooms.add(i);
+            }
+        }
+        return allRooms;
     }
 
 

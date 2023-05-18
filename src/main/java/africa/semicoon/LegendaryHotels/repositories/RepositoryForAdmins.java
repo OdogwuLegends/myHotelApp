@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
-public class RepositoryForAdmin implements IAdminRepository{
+public class RepositoryForAdmins implements IAdminRepository{
     List<Admin> adminRepository = new ArrayList<>();
 
     @Override

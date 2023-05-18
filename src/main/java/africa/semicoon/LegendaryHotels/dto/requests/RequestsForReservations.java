@@ -4,7 +4,7 @@ import africa.semicoon.LegendaryHotels.models.RoomType;
 import lombok.Data;
 
 @Data
-public class ReservationRequest {
+public class RequestsForReservations {
     private String firstName;
     private String lastName;
     private String email;
@@ -16,5 +16,6 @@ public class ReservationRequest {
     private String checkOutDate;
     private String checkOutMonth;
     private String checkOutYear;
+    private int amount;
 
 }

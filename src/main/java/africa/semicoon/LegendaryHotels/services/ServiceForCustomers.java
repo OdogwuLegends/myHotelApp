@@ -1,9 +1,10 @@
 package africa.semicoon.LegendaryHotels.services;
 
-import africa.semicoon.LegendaryHotels.dto.requests.CustomerRequest;
-import africa.semicoon.LegendaryHotels.dto.response.CustomerRegistrationResponse;
-import africa.semicoon.LegendaryHotels.dto.response.DeleteResponse;
-import africa.semicoon.LegendaryHotels.dto.response.GetEmailResponse;
+import africa.semicoon.LegendaryHotels.dto.requests.RequestsForCustomers;
+import africa.semicoon.LegendaryHotels.dto.response.ResponseForCustomerRegistration;
+import africa.semicoon.LegendaryHotels.dto.response.ResponseForDelete;
+import africa.semicoon.LegendaryHotels.dto.response.ResponseToFindByEmail;
+import africa.semicoon.LegendaryHotels.exceptions.EntityDoesNotExistException;
 import africa.semicoon.LegendaryHotels.exceptions.InvalidEmailException;
 import africa.semicoon.LegendaryHotels.models.Customer;
 import africa.semicoon.LegendaryHotels.repositories.ICustomerRepository;
@@ -11,53 +12,58 @@ import africa.semicoon.LegendaryHotels.repositories.RepositoryForCustomers;
 import africa.semicoon.LegendaryHotels.utils.Map;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import static africa.semicoon.LegendaryHotels.utils.AppUtils.emailIsCorrect;
 
 public class ServiceForCustomers implements ICustomerService{
 
     private final ICustomerRepository customerRepository = new RepositoryForCustomers();
     @Override
-    public CustomerRegistrationResponse saveCustomer(CustomerRequest newCustomerRequest) throws InvalidEmailException {
-        if(!emailIsCorrect(newCustomerRequest.getEmail())){
+    public ResponseForCustomerRegistration saveCustomer(RequestsForCustomers newRequestsForCustomers) throws InvalidEmailException {
+        if(!emailIsCorrect(newRequestsForCustomers.getEmail())){
             throw new InvalidEmailException("Invalid email.");
         }
-        Customer newCustomer = Map.map(newCustomerRequest);
-
-        customerRepository.saveCustomer(newCustomer);
-        return new CustomerRegistrationResponse();
+        Customer newCustomer = Map.requestToCustomer(newRequestsForCustomers);
+        Customer savedCustomer =  customerRepository.saveCustomer(newCustomer);
+        return Map.customerToRegistrationResponse(savedCustomer);
     }
 
     @Override
-    public GetEmailResponse getCustomerByEmail(String email) throws InvalidEmailException {
+    public ResponseToFindByEmail getCustomerByEmail(String email) throws InvalidEmailException, EntityDoesNotExistException {
         if(!emailIsCorrect(email)){
             throw new InvalidEmailException("Invalid email.");
         }
-        GetEmailResponse getEmailResponse = new GetEmailResponse();
+        ResponseToFindByEmail responseToFindByEmail;
 
         Customer customer = customerRepository.getCustomerByEmail(email);
-        if(customer != null) {
-            getEmailResponse.setFirstName(customer.getFirstName());
-            getEmailResponse.setLastName(customer.getLastName());
-            getEmailResponse.setEmail(customer.getEmail());
+        if(customer == null) {
+           throw new EntityDoesNotExistException("Customer does not exist.");
         }
         else {
-            getEmailResponse.setMessage("Customer does not exist.");
+//            getEmailResponse.setFirstName(customer.getFirstName());
+//            getEmailResponse.setLastName(customer.getLastName());
+//            getEmailResponse.setEmail(customer.getEmail());
+            responseToFindByEmail = Map.customerToEmailResponse(customer);
         }
-        return getEmailResponse;
+        return responseToFindByEmail;
     }
 
     @Override
-    public DeleteResponse deleteByEmail(CustomerRequest newCustomerRequest) throws InvalidEmailException {
-        if(!emailIsCorrect(newCustomerRequest.getEmail())){
+    public ResponseForDelete deleteByEmail(RequestsForCustomers newRequestsForCustomers) throws InvalidEmailException, EntityDoesNotExistException {
+        if(!emailIsCorrect(newRequestsForCustomers.getEmail())){
             throw new InvalidEmailException("Invalid email.");
         }
-        String email = newCustomerRequest.getEmail();
-        customerRepository.deleteByEmail(email);
+        String email = newRequestsForCustomers.getEmail();
 
-        DeleteResponse deleteResponse = new DeleteResponse();
-        deleteResponse.setMessage("Customer successfully deleted.");
-        return deleteResponse;
+        if(email == null){
+            throw new EntityDoesNotExistException("Customer does not exist.");
+        } else{
+            customerRepository.deleteByEmail(email);
+        }
+
+        ResponseForDelete responseForDelete = new ResponseForDelete();
+        responseForDelete.setMessage("Customer successfully deleted.");
+        return responseForDelete;
     }
 
     @Override
@@ -65,10 +71,9 @@ public class ServiceForCustomers implements ICustomerService{
         return customerRepository.getAllCustomers();
     }
 
-    private boolean emailIsCorrect(String email){
-        String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
+    @Override
+    public boolean verifyPassword(String password) {
+        return customerRepository.verifyPassword(password);
     }
+
 }

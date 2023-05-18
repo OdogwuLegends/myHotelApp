@@ -9,4 +9,5 @@ public interface ICustomerRepository {
     Customer getCustomerByEmail(String email);
     List<Customer> getAllCustomers();
     void deleteByEmail(String email);
+    boolean verifyPassword(String password);
 }

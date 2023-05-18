@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class Display {
     public static void message(String message) { System.out.println(message); }
+    public static void errorMessage(String message) { System.err.println(message); }
 
     public static int intInput(String prompt){
         System.out.print(prompt);

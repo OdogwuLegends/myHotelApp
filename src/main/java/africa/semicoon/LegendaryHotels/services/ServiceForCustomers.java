@@ -23,6 +23,8 @@ public class ServiceForCustomers implements ICustomerService{
         if(!emailIsCorrect(newRequestsForCustomers.getEmail())){
             throw new InvalidEmailException("Invalid email.");
         }
+
+
         Customer newCustomer = Map.requestToCustomer(newRequestsForCustomers);
         Customer savedCustomer =  customerRepository.saveCustomer(newCustomer);
         return Map.customerToRegistrationResponse(savedCustomer);

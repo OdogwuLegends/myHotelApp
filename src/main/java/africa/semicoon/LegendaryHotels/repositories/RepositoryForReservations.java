@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import static africa.semicoon.LegendaryHotels.models.RoomType.SINGLE;
+
 public class RepositoryForReservations implements IReservationRepository {
 
     private List<Reservation> reservations = new ArrayList<>();
@@ -18,19 +20,19 @@ public class RepositoryForReservations implements IReservationRepository {
 
     @Override
     public String findARoom(RoomType roomType) {
-        if(roomType == RoomType.SINGLE){ return printAvailableSingleRooms(); }
+        if(roomType == SINGLE){ return printAvailableSingleRooms(); }
         else { return printAvailableDoubleRooms(); }
     }
 
     @Override
-    public String reserveARoom(Reservation customerReservation, RoomType roomType, int roomNumberChoice,int amount) {
-        if(roomType == RoomType.SINGLE){
+    public String reserveARoom(Reservation customerReservation) {
+        if(customerReservation.getRoom().getRoomType() == SINGLE){
             reservations.add(customerReservation);
-            return bookSingleRoom(roomNumberChoice, amount);
+            return bookSingleRoom(customerReservation.getRoom().getRoomNumber(), customerReservation.getRoom().getPrice());
         }
         else {
             reservations.add(customerReservation);
-            return bookDoubleRoom(roomNumberChoice, amount);
+            return bookDoubleRoom(customerReservation.getRoom().getRoomNumber(), customerReservation.getRoom().getPrice());
         }
     }
 
@@ -51,28 +53,28 @@ public class RepositoryForReservations implements IReservationRepository {
     }
 
     @Override
-    public Reservation checkOut(Date checkInDate, Date checkOutDate) {
+    public String checkOut(Date checkInDate, Date checkOutDate) {
         RoomType roomType = null;
         int roomNumberChoice = 0;
         for (Reservation customerReservation : reservations){
             if(Objects.equals(customerReservation.getCheckIn(),checkInDate) && Objects.equals(customerReservation.getCheckOut(),checkOutDate)) {
                 roomNumberChoice = customerReservation.getRoom().getRoomNumber();
-                roomType = customerReservation.getRoomType();
-
+                roomType = customerReservation.getRoom().getRoomType();
+                reservations.remove(customerReservation);
             }
-            if(roomType == RoomType.SINGLE){
-                checkOutSingleRoom(roomNumberChoice);
+            if(roomType == SINGLE){
+               return checkOutSingleRoom(roomNumberChoice);
             }
             else {
-                checkOutDoubleRoom(roomNumberChoice);
+               return checkOutDoubleRoom(roomNumberChoice);
             }
-            reservations.remove(customerReservation);
         }
+
         return null;
     }
 
     @Override
-    public List<Reservation> printReservations() {
+    public List<Reservation> getAllReservations() {
         return reservations;
     }
 
@@ -82,7 +84,7 @@ public class RepositoryForReservations implements IReservationRepository {
         Room room = new Room();
         room.setRoomNumber(choice);
         room.setPrice(amount);
-        return "Room " + choice + " Booked Successfully\n";
+        return "Room " + choice + " Booked Successfully";
     }
 
 
@@ -91,7 +93,7 @@ public class RepositoryForReservations implements IReservationRepository {
         Room room = new Room();
         room.setRoomNumber(choice);
         room.setPrice(amount);
-        return "Room " + choice + " Booked Successfully\n";
+        return "Room " + choice + " Booked Successfully";
     }
 
 
@@ -103,7 +105,7 @@ public class RepositoryForReservations implements IReservationRepository {
             room.setRoomNumber(0);
             room.setPrice(0);
         }
-        return "Room " + choice + " checkout Successful. Thank you for your patronage.\n";
+        return "Room " + choice + " checkout Successful. Thank you for your patronage.";
     }
 
 
@@ -151,7 +153,7 @@ public class RepositoryForReservations implements IReservationRepository {
                 availableRooms.append(", ");
             }
         }
-        return "Available Single Rooms are " + availableRooms + " \n";
+        return "Available Single Rooms are " + availableRooms ;
     }
 
 
@@ -163,7 +165,7 @@ public class RepositoryForReservations implements IReservationRepository {
                 availableRooms.append(", ");
             }
         }
-        return "Available Double Rooms are " + availableRooms + " \n";
+        return "Available Double Rooms are " + availableRooms ;
     }
     public List<Integer> listOfBookedSingleRooms(){
         List<Integer> bookedSingleRooms = new ArrayList<>();
@@ -196,6 +198,14 @@ public class RepositoryForReservations implements IReservationRepository {
             }
         }
         return allRooms;
+    }
+
+    @Override
+    public Reservation findReservationByEmail(String email) {
+        for(Reservation customerReservation : reservations){
+            if(Objects.equals(customerReservation.getCustomer().getEmail(),email)) return customerReservation;
+        }
+        return null;
     }
 
 

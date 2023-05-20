@@ -10,14 +10,15 @@ import java.util.List;
 
 public interface IReservationRepository {
     String findARoom(RoomType roomType);
-    String reserveARoom(Reservation customerReservation, RoomType roomType, int roomNumberChoice, int amount);
+    String reserveARoom(Reservation customerReservation);
     Room getRoom(int roomNumber);
     Reservation getCustomerReservation(Customer customer);
-    Reservation checkOut(Date checkInDate, Date checkOutDate);
-    List<Reservation> printReservations();
+    String checkOut(Date checkInDate, Date checkOutDate);
+    List<Reservation> getAllReservations();
     List<Integer> listOfBookedSingleRooms();
     List<Integer> listOfBookedDoubleRooms();
     List<Integer> showAllRooms();
+    Reservation findReservationByEmail(String email);
 
 
 }

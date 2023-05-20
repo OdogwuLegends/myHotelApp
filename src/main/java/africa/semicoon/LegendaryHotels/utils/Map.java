@@ -9,6 +9,8 @@ import africa.semicoon.LegendaryHotels.dto.response.ResponseForReservation;
 import africa.semicoon.LegendaryHotels.dto.response.ResponseToFindByEmail;
 import africa.semicoon.LegendaryHotels.exceptions.InvalidEmailException;
 import africa.semicoon.LegendaryHotels.models.*;
+import africa.semicoon.LegendaryHotels.repositories.IReservationRepository;
+import africa.semicoon.LegendaryHotels.repositories.RepositoryForReservations;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -22,8 +24,9 @@ public class Map {
     public static Reservation requestToReservation(RequestsForReservations requestsForReservations){
 
         Customer customer = customerDetails(requestsForReservations);
+        Room room = setRoomDetail(requestsForReservations);
 
-        RoomType roomType = roomDetail(requestsForReservations);
+        //RoomType roomType = roomDetail(requestsForReservations);
 
         Date checkIn = setDate(requestsForReservations.getCheckInDate(), requestsForReservations.getCheckInMonth(), requestsForReservations.getCheckInYear());
         Date checkOut = setDate(requestsForReservations.getCheckOutDate(), requestsForReservations.getCheckOutMonth(), requestsForReservations.getCheckOutYear());
@@ -31,7 +34,7 @@ public class Map {
         Reservation customerReservation = new Reservation();
 
         customerReservation.setCustomer(customer);
-        customerReservation.setRoomType(roomType);
+        customerReservation.setRoom(room);
         customerReservation.setCheckIn(checkIn);
         customerReservation.setCheckOut(checkOut);
 
@@ -99,31 +102,61 @@ public class Map {
    
 
     private static RoomType roomDetail(RequestsForReservations requestsForReservations) {
-        return requestsForReservations.getRoomType();
+        return requestsForReservations.getRoom().getRoomType();
 
+    }
+    private static Room setRoomDetail(RequestsForReservations requestsForReservations){
+        Room room = new Room();
+        room.setRoomNumber(requestsForReservations.getRoom().getRoomNumber());
+        room.setPrice(requestsForReservations.getRoom().getPrice());
+        room.setRoomType(requestsForReservations.getRoom().getRoomType());
+
+        return room;
     }
 
     private static Customer customerDetails(RequestsForReservations requestsForReservations) {
         Customer customer = new Customer();
-        customer.setFirstName(requestsForReservations.getFirstName());
-        customer.setLastName(requestsForReservations.getLastName());
-        customer.setEmail(requestsForReservations.getEmail());
+        customer.setFirstName(requestsForReservations.getCustomer().getFirstName());
+        customer.setLastName(requestsForReservations.getCustomer().getLastName());
+        customer.setEmail(requestsForReservations.getCustomer().getEmail());
         return customer;
     }
 
+
+    public static ResponseForReservation olaMap(String email){
+        System.out.println("Na here i dey ooooooooooooo");
+        IReservationRepository reservationRepository = new RepositoryForReservations();
+
+        Reservation foundReservation = reservationRepository.findReservationByEmail(email);
+
+        ResponseForReservation responseForReservation = new ResponseForReservation();
+
+
+        if (foundReservation != null){
+        responseForReservation.setFirstName(foundReservation.getCustomer().getFirstName());
+        responseForReservation.setLastName(foundReservation.getCustomer().getLastName());
+        responseForReservation.setAmount(foundReservation.getRoom().getPrice());
+        responseForReservation.setRoomChoice(foundReservation.getRoom().getRoomNumber());
+        responseForReservation.setRoomType(foundReservation.getRoom().getRoomType());
+        responseForReservation.setCheckInDate(foundReservation.getCheckIn());
+        responseForReservation.setCheckOutDate(foundReservation.getCheckOut());
+        }
+
+        return responseForReservation;
+    }
     public static ResponseForReservation reservationToReservationResponse(Reservation reservation){
         ResponseForReservation responseForReservation = new ResponseForReservation();
+
 
         Customer foundCustomer = reservation.getCustomer();
         Room room = reservation.getRoom();
         Date foundCheckIn = reservation.getCheckIn();
         Date foundCheckOut = reservation.getCheckOut();
-        RoomType roomType = reservation.getRoomType();
 
         responseForReservation.setFirstName(foundCustomer.getFirstName());
         responseForReservation.setLastName(foundCustomer.getLastName());
         responseForReservation.setAmount(room.getPrice());
-        responseForReservation.setRoomType(roomType);
+        responseForReservation.setRoomType(room.getRoomType());
         responseForReservation.setRoomChoice(room.getRoomNumber());
         responseForReservation.setCheckInDate(foundCheckIn);
         responseForReservation.setCheckOutDate(foundCheckOut);
@@ -132,46 +165,9 @@ public class Map {
     }
     
 
-    public static Date setDate(String date, String month, String year){
+    public static Date setDate(int date, int month, int year){
         Calendar newDate = Calendar.getInstance();
-        int dateValue = Integer.parseInt(date);
-        int yearValue = Integer.parseInt(year);
-
-        if (Objects.equals(month, "1") || Objects.equals(month, "01")) {newDate.set(yearValue, Calendar.JANUARY,dateValue);}
-        else if (Objects.equals(month, "2") || Objects.equals(month, "02")) {newDate.set(yearValue, Calendar.FEBRUARY,dateValue);}
-        else if (Objects.equals(month, "3") || Objects.equals(month, "03")) {newDate.set(yearValue, Calendar.MARCH,dateValue);}
-        else if (Objects.equals(month, "4") || Objects.equals(month, "04")) {newDate.set(yearValue, Calendar.APRIL,dateValue);}
-        else if (Objects.equals(month, "5") || Objects.equals(month, "05")) {newDate.set(yearValue, Calendar.MAY,dateValue);}
-        else if (Objects.equals(month, "6") || Objects.equals(month, "06")) {newDate.set(yearValue, Calendar.JUNE,dateValue);}
-        else if (Objects.equals(month, "7") || Objects.equals(month, "07")) {newDate.set(yearValue, Calendar.JULY,dateValue);}
-        else if (Objects.equals(month, "8") || Objects.equals(month, "08")) {newDate.set(yearValue, Calendar.AUGUST,dateValue);}
-        else if (Objects.equals(month, "9") || Objects.equals(month, "09")) {newDate.set(yearValue, Calendar.SEPTEMBER,dateValue);}
-        else if (Objects.equals(month, "10") || Objects.equals(month, "010")) {newDate.set(yearValue, Calendar.OCTOBER,dateValue);}
-        else if (Objects.equals(month, "11") || Objects.equals(month, "011")) {newDate.set(yearValue, Calendar.NOVEMBER,dateValue);}
-        else if (Objects.equals(month, "12") || Objects.equals(month, "012")) {newDate.set(yearValue, Calendar.DECEMBER,dateValue);}
-
-
-//
-//        int monthValue = Integer.parseInt(month);
-//        int dateValue = Integer.parseInt(date);
-//        int yearValue = Integer.parseInt(year);
-//        newDate.set(yearValue,monthValue - ONE,dateValue);
-
-
-//        if (Objects.equals(month, "1") || Objects.equals(month, "01")) {month = String.valueOf(Calendar.JANUARY);}
-//        else if (Objects.equals(month, "2") || Objects.equals(month, "02")) {month = String.valueOf(Calendar.FEBRUARY);}
-//        else if (Objects.equals(month, "3") || Objects.equals(month, "03")) {month = String.valueOf(Calendar.MARCH);}
-//        else if (Objects.equals(month, "4") || Objects.equals(month, "04")) {month = String.valueOf(Calendar.APRIL);}
-//        else if (Objects.equals(month, "5") || Objects.equals(month, "05")) {month = String.valueOf(Calendar.MAY);}
-//        else if (Objects.equals(month, "6") || Objects.equals(month, "06")) {month = String.valueOf(Calendar.JUNE);}
-//        else if (Objects.equals(month, "7") || Objects.equals(month, "07")) {month = String.valueOf(Calendar.JULY);}
-//        else if (Objects.equals(month, "8") || Objects.equals(month, "08")) {month = String.valueOf(Calendar.AUGUST);}
-//        else if (Objects.equals(month, "9") || Objects.equals(month, "09")) {month = String.valueOf(Calendar.SEPTEMBER);}
-//        else if (Objects.equals(month, "10") || Objects.equals(month, "010")) {month = String.valueOf(Calendar.OCTOBER);}
-//        else if (Objects.equals(month, "11") || Objects.equals(month, "011")) {month = String.valueOf(Calendar.NOVEMBER);}
-//        else if (Objects.equals(month, "12") || Objects.equals(month, "012")) {month = String.valueOf(Calendar.DECEMBER);}
-//
-
+        newDate.set(year,month - ONE,date);
 
         return newDate.getTime();
     }

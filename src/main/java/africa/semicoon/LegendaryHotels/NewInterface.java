@@ -7,7 +7,10 @@ import africa.semicoon.LegendaryHotels.dto.requests.RequestsForCustomers;
 import africa.semicoon.LegendaryHotels.dto.requests.RequestsForReservations;
 import africa.semicoon.LegendaryHotels.dto.response.ResponseForReservation;
 import africa.semicoon.LegendaryHotels.dto.response.ResponseToFindByEmail;
+import africa.semicoon.LegendaryHotels.models.Customer;
+import africa.semicoon.LegendaryHotels.models.Room;
 import africa.semicoon.LegendaryHotels.models.RoomType;
+import africa.semicoon.LegendaryHotels.utils.AppUtils;
 import africa.semicoon.LegendaryHotels.utils.Display;
 
 import java.util.Objects;
@@ -55,7 +58,7 @@ public class NewInterface {
         ReserveARoom();
     }
     public static void ReserveARoom(){
-        ResponseToFindByEmail responseToFindByEmail = signIn();
+        //ResponseToFindByEmail responseToFindByEmail = signIn();
 
         RequestsForReservations requestsForReservations = new RequestsForReservations();
 
@@ -67,17 +70,10 @@ public class NewInterface {
 
         Display.message(reservationController.findARoom(roomType));
 
-        String userResponse = Display.StringInput("\nDo you wish to proceed? ");
+        String userResponse = Display.StringInput("\nDo you wish to proceed? Enter Yes/No.");
         int amount = 0;
         int roomNumber = 0;
         RoomType type = null;
-
-        String checkInDate = null;
-        String checkInMonth = null;
-        String checkInYear = null;
-        String checkOutDate = null;
-        String checkOutMonth = null;
-        String checkOutYear = null;
 
 
         if(userResponse.equalsIgnoreCase("Yes")){
@@ -92,32 +88,48 @@ public class NewInterface {
                 amount = Display.intInput("Enter amount($50): ");
                 //Display.message(reservationController.reserveARoom(requestsForReservations));
             }
-            checkInDate = Display.StringInput("Check In date: ");
-            checkInMonth = Display.StringInput("Check In month(in digits): ");
-            checkInYear = Display.StringInput("Check In year: ");
-            checkOutDate = Display.StringInput("Check out date: ");
-            checkOutMonth = Display.StringInput("Check out month(in digits): ");
-            checkOutYear = Display.StringInput("Check out year: \n");
         }
 
-        String firstName = responseToFindByEmail.getFirstName();
-        String lastName = responseToFindByEmail.getLastName();
-        String email = responseToFindByEmail.getEmail();
+
+        int checkInDate = Display.intInput("Check In date: ");
+        int checkInMonth = Display.intInput("Check In month(in digits): ");
+        int checkInYear = Display.intInput("Check In year: ");
+        int checkOutDate = Display.intInput("Check out date: ");
+        int checkOutMonth = Display.intInput("Check out month(in digits): ");
+        int checkOutYear = Display.intInput("Check out year: \n");
+//
+//        String firstName = responseToFindByEmail.getFirstName();
+//        String lastName = responseToFindByEmail.getLastName();
+//        String email = responseToFindByEmail.getEmail();
 
 
+        String firstName = Display.StringInput("Enter First Name: ");
+        String lastName = Display.StringInput("Enter Last name: ");
+        String email = Display.StringInput("Enter email: ");
+        String password = Display.StringInput("Enter password: ");
 
-        requestsForReservations.setFirstName(firstName);
-        requestsForReservations.setLastName(lastName);
-        requestsForReservations.setEmail(email);
-        requestsForReservations.setRoomType(type);
-        requestsForReservations.setRoomChoice(roomNumber);
-        requestsForReservations.setAmount(amount);
+
+        Customer newCustomer = new Customer();
+        newCustomer.setFirstName(firstName);
+        newCustomer.setLastName(lastName);
+        newCustomer.setEmail(email);
+        newCustomer.setPassword(password);
+        requestsForReservations.setCustomer(newCustomer);
+
+        Room room = new Room();
+        room.setRoomNumber(roomNumber);
+        room.setPrice(amount);
+        room.setRoomType(type);
+        requestsForReservations.setRoom(room);
+
+
         requestsForReservations.setCheckInDate(checkInDate);
         requestsForReservations.setCheckInMonth(checkInMonth);
         requestsForReservations.setCheckInYear(checkInYear);
         requestsForReservations.setCheckOutDate(checkOutDate);
         requestsForReservations.setCheckOutMonth(checkOutMonth);
         requestsForReservations.setCheckOutYear(checkOutYear);
+
 
         Display.message(reservationController.reserveARoom(requestsForReservations)+"\n");
 
@@ -145,7 +157,7 @@ public class NewInterface {
         RequestsForReservations requestsForReservations = new RequestsForReservations();
 
         String email = Display.StringInput("Enter your email: ");
-        requestsForReservations.setEmail(email);
+        //requestsForReservations.setEmail(email);
 
         return adminController.getCustomerReservation(requestsForReservations);
     }
@@ -165,10 +177,13 @@ public class NewInterface {
     private static void createAccount(){
         String firstName = Display.StringInput("First Name: ");
         String lastName = Display.StringInput("Last Name: ");
-        String email = Display.StringInput("Email address: ");
         String password = Display.StringInput("Set password: ");
         String reconfirmPassword = reconfirmPassword(password);
-
+        String email = Display.StringInput("Email address: ");
+        while(!AppUtils.emailIsCorrect(email)){
+            Display.message("Wrong email address.");
+            email= Display.StringInput("Enter correct Email address : ");
+        }
         RequestsForCustomers requestsForCustomers = new RequestsForCustomers();
         requestsForCustomers.setFirstName(firstName);
         requestsForCustomers.setLastName(lastName);

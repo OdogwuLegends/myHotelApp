@@ -6,7 +6,6 @@ import africa.semicoon.LegendaryHotels.exceptions.AmountIncorrectException;
 import africa.semicoon.LegendaryHotels.exceptions.InvalidRoomNumberException;
 import africa.semicoon.LegendaryHotels.exceptions.RoomUnavailableException;
 import africa.semicoon.LegendaryHotels.models.Reservation;
-import africa.semicoon.LegendaryHotels.models.Room;
 import africa.semicoon.LegendaryHotels.services.IReservationService;
 import africa.semicoon.LegendaryHotels.services.ServiceForReservations;
 
@@ -25,13 +24,13 @@ public class ControllerForReservations {
     public String findARoom(int roomType){
         return reservationService.findARoom(roomType);
     }
-    public Room getRoom(RequestsForReservations requestsForReservations){
-        return reservationService.getRoom(requestsForReservations);
+    public String getRoom(RequestsForReservations requestsForReservations){
+        return reservationService.getRoom(requestsForReservations).toString();
     }
     public ResponseForReservation getCustomerReservation(RequestsForReservations requestsForReservations){
         return reservationService.getCustomerReservation(requestsForReservations);
     }
-    public Reservation checkOut(RequestsForReservations requestsForReservations){
+    public String checkOut(RequestsForReservations requestsForReservations){
         try{
             return reservationService.checkOut(requestsForReservations);
         } catch (InvalidRoomNumberException ex){
@@ -40,7 +39,7 @@ public class ControllerForReservations {
         return null;
     }
     public List<Reservation> printReservations(){
-        return reservationService.printReservations();
+        return reservationService.findAllReservations();
     }
 
     public List<Integer> showAllRooms(){ return reservationService.showAllRooms(); }

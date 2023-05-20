@@ -5,13 +5,11 @@ import africa.semicoon.LegendaryHotels.dto.response.ResponseForReservation;
 import africa.semicoon.LegendaryHotels.exceptions.AmountIncorrectException;
 import africa.semicoon.LegendaryHotels.exceptions.InvalidRoomNumberException;
 import africa.semicoon.LegendaryHotels.exceptions.RoomUnavailableException;
-import africa.semicoon.LegendaryHotels.models.Customer;
 import africa.semicoon.LegendaryHotels.models.Reservation;
 import africa.semicoon.LegendaryHotels.models.Room;
 import africa.semicoon.LegendaryHotels.models.RoomType;
 import africa.semicoon.LegendaryHotels.repositories.IReservationRepository;
 import africa.semicoon.LegendaryHotels.repositories.RepositoryForReservations;
-import africa.semicoon.LegendaryHotels.utils.Display;
 import africa.semicoon.LegendaryHotels.utils.Map;
 
 import java.util.Date;
@@ -36,9 +34,9 @@ public class ServiceForReservations implements IReservationService {
 
     @Override
     public String reserveARoom(RequestsForReservations customerReservation) throws RoomUnavailableException, AmountIncorrectException {
-        int roomChoiceNumber = customerReservation.getRoomChoice();
-        int amount = customerReservation.getAmount();
-        RoomType roomType = customerReservation.getRoomType();
+        int roomChoiceNumber = customerReservation.getRoom().getRoomNumber();
+        int amount = customerReservation.getRoom().getPrice();
+        RoomType roomType = customerReservation.getRoom().getRoomType();
         Reservation newCustomer = Map.requestToReservation(customerReservation);
 
         if(roomType == RoomType.SINGLE){
@@ -62,26 +60,28 @@ public class ServiceForReservations implements IReservationService {
                 throw new AmountIncorrectException("Wrong amount entered. Please pay $50.");
             }
         }
-        return repositoryForReservation.reserveARoom(newCustomer,roomType,roomChoiceNumber,amount);
+        return repositoryForReservation.reserveARoom(newCustomer);
     }
 
     @Override
     public Room getRoom(RequestsForReservations customerReservation) {
-        int roomNumberChoice = customerReservation.getRoomChoice();
+        int roomNumberChoice = customerReservation.getRoom().getRoomNumber();
         return repositoryForReservation.getRoom(roomNumberChoice);
     }
 
     @Override
     public ResponseForReservation getCustomerReservation(RequestsForReservations customerReservation) {
-        Customer newCustomer = Map.requestToReservation(customerReservation).getCustomer();
-        Reservation foundReservation = repositoryForReservation.getCustomerReservation(newCustomer);
-        return Map.reservationToReservationResponse(foundReservation);
+        String email = customerReservation.getCustomer().getEmail();
+
+        //Customer newCustomer = Map.requestToReservation(customerReservation).getCustomer();
+        //Reservation foundReservation = repositoryForReservation.getCustomerReservation(newCustomer);
+       return Map.olaMap(email);
     }
 
     @Override
-    public Reservation checkOut(RequestsForReservations customerReservation) throws InvalidRoomNumberException {
-        int roomChoiceNumber = customerReservation.getRoomChoice();
-        RoomType roomType = customerReservation.getRoomType();
+    public String checkOut(RequestsForReservations customerReservation) throws InvalidRoomNumberException {
+        int roomChoiceNumber = customerReservation.getRoom().getRoomNumber();
+        RoomType roomType = customerReservation.getRoom().getRoomType();
         Date checkInDate = Map.setDate(customerReservation.getCheckInDate(), customerReservation.getCheckInMonth(), customerReservation.getCheckInYear());
         Date checkOutDate = Map.setDate(customerReservation.getCheckOutDate(), customerReservation.getCheckOutMonth(), customerReservation.getCheckOutYear());
 
@@ -104,8 +104,8 @@ public class ServiceForReservations implements IReservationService {
     }
 
     @Override
-    public List<Reservation> printReservations() {
-        return repositoryForReservation.printReservations();
+    public List<Reservation> findAllReservations() {
+        return repositoryForReservation.getAllReservations();
     }
 
     public List<Integer> showAllRooms() { return repositoryForReservation.showAllRooms(); }

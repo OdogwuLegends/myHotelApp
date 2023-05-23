@@ -1,5 +1,7 @@
 package africa.semicoon.LegendaryHotels.repositories;
 
+import africa.semicoon.LegendaryHotels.dto.response.ResponseForReservation;
+import africa.semicoon.LegendaryHotels.dto.response.ResponseForRoomBooking;
 import africa.semicoon.LegendaryHotels.models.Customer;
 import africa.semicoon.LegendaryHotels.models.Reservation;
 import africa.semicoon.LegendaryHotels.models.Room;
@@ -17,15 +19,14 @@ public class RepositoryForReservations implements IReservationRepository {
     private List<Reservation> reservations = new ArrayList<>();
     private int[] rooms = new int[20];
 
-
     @Override
-    public String findARoom(RoomType roomType) {
+    public ResponseForRoomBooking findARoom(RoomType roomType) {
         if(roomType == SINGLE){ return printAvailableSingleRooms(); }
         else { return printAvailableDoubleRooms(); }
     }
 
     @Override
-    public String reserveARoom(Reservation customerReservation) {
+    public ResponseForRoomBooking reserveARoom(Reservation customerReservation) {
         if(customerReservation.getRoom().getRoomType() == SINGLE){
             reservations.add(customerReservation);
             return bookSingleRoom(customerReservation.getRoom().getRoomNumber(), customerReservation.getRoom().getPrice());
@@ -48,12 +49,13 @@ public class RepositoryForReservations implements IReservationRepository {
     public Reservation getCustomerReservation(Customer customer) {
         for (Reservation customerReservation : reservations){
             if(Objects.equals(customerReservation.getCustomer(),customer)) return customerReservation;
+            //if(customerReservation.getCustomer().getEmail().equals(customer.getEmail())) return customerReservation;
         }
         return null;
     }
 
     @Override
-    public String checkOut(Date checkInDate, Date checkOutDate) {
+    public ResponseForRoomBooking checkOut(Date checkInDate, Date checkOutDate) {
         RoomType roomType = null;
         int roomNumberChoice = 0;
         for (Reservation customerReservation : reservations){
@@ -79,25 +81,33 @@ public class RepositoryForReservations implements IReservationRepository {
     }
 
 
-    private String bookSingleRoom(int choice, int amount) {
+    private ResponseForRoomBooking bookSingleRoom(int choice, int amount) {
         rooms[choice - 1] = 1;
         Room room = new Room();
         room.setRoomNumber(choice);
         room.setPrice(amount);
-        return "Room " + choice + " Booked Successfully";
+
+        ResponseForRoomBooking responseForRoomBooking = new ResponseForRoomBooking();
+        responseForRoomBooking.setMessage("Room " + choice + " Booked Successfully");
+
+        return responseForRoomBooking;
     }
 
 
-    private String bookDoubleRoom(int choice, int amount) {
+    private ResponseForRoomBooking bookDoubleRoom(int choice, int amount) {
         rooms[choice - 1] = 1;
         Room room = new Room();
         room.setRoomNumber(choice);
         room.setPrice(amount);
-        return "Room " + choice + " Booked Successfully";
+
+        ResponseForRoomBooking responseForRoomBooking = new ResponseForRoomBooking();
+        responseForRoomBooking.setMessage("Room " + choice + " Booked Successfully");
+
+        return responseForRoomBooking;
     }
 
 
-    private String checkOutSingleRoom(int choice) {
+    private ResponseForRoomBooking checkOutSingleRoom(int choice) {
 
         if(rooms[choice -1] == 1){
             rooms[choice -1] = 0;
@@ -105,11 +115,14 @@ public class RepositoryForReservations implements IReservationRepository {
             room.setRoomNumber(0);
             room.setPrice(0);
         }
-        return "Room " + choice + " checkout Successful. Thank you for your patronage.";
+
+        ResponseForRoomBooking responseForRoomBooking = new ResponseForRoomBooking();
+        responseForRoomBooking.setMessage("Room " + choice + " checkout Successful. Thank you for your patronage.");
+        return responseForRoomBooking;
     }
 
 
-    private String checkOutDoubleRoom(int choice) {
+    private ResponseForRoomBooking checkOutDoubleRoom(int choice) {
 
         if(rooms[choice -1] == 1){
             rooms[choice -1] = 0;
@@ -117,11 +130,13 @@ public class RepositoryForReservations implements IReservationRepository {
             room.setRoomNumber(0);
             room.setPrice(0);
         }
-        return "Room " + choice + " checkout Successful. Thank you for your patronage.\n";
+        ResponseForRoomBooking responseForRoomBooking = new ResponseForRoomBooking();
+        responseForRoomBooking.setMessage("Room " + choice + " checkout Successful. Thank you for your patronage.");
+        return responseForRoomBooking;
     }
 
 
-    private String printBookedSingleRooms() {
+    private ResponseForRoomBooking printBookedSingleRooms() {
         StringBuilder bookedRooms = new StringBuilder();
         for (int i = 1; i <= 10; i++) {
             if(rooms[i - 1] == 1){
@@ -129,11 +144,13 @@ public class RepositoryForReservations implements IReservationRepository {
                 bookedRooms.append(", ");
             }
         }
-        return "Booked Single Rooms are " + bookedRooms + " \n";
+        ResponseForRoomBooking responseForRoomBooking = new ResponseForRoomBooking();
+        responseForRoomBooking.setMessage("Booked Single Rooms are " + bookedRooms);
+        return responseForRoomBooking;
     }
 
 
-    private String printBookedDoubleRooms() {
+    private ResponseForRoomBooking printBookedDoubleRooms() {
         StringBuilder bookedRooms = new StringBuilder();
         for (int i = 11; i <= rooms.length; i++) {
             if(rooms[i - 1] == 1){
@@ -141,11 +158,13 @@ public class RepositoryForReservations implements IReservationRepository {
                 bookedRooms.append(", ");
             }
         }
-        return "Booked Double Rooms are " + bookedRooms + " \n";
+        ResponseForRoomBooking responseForRoomBooking = new ResponseForRoomBooking();
+        responseForRoomBooking.setMessage("Booked Double Rooms are " + bookedRooms);
+        return responseForRoomBooking;
     }
 
 
-    private String printAvailableSingleRooms() {
+    private ResponseForRoomBooking printAvailableSingleRooms() {
         StringBuilder availableRooms = new StringBuilder();
         for (int i = 1; i <= 10; i++) {
             if(rooms[i - 1] == 0){
@@ -153,11 +172,13 @@ public class RepositoryForReservations implements IReservationRepository {
                 availableRooms.append(", ");
             }
         }
-        return "Available Single Rooms are " + availableRooms ;
+        ResponseForRoomBooking responseForRoomBooking = new ResponseForRoomBooking();
+        responseForRoomBooking.setMessage("Available Single Rooms are " + availableRooms);
+        return responseForRoomBooking;
     }
 
 
-    private String printAvailableDoubleRooms() {
+    private ResponseForRoomBooking printAvailableDoubleRooms() {
         StringBuilder availableRooms = new StringBuilder();
         for (int i = 11; i <= rooms.length; i++) {
             if(rooms[i - 1] == 0){
@@ -165,7 +186,9 @@ public class RepositoryForReservations implements IReservationRepository {
                 availableRooms.append(", ");
             }
         }
-        return "Available Double Rooms are " + availableRooms ;
+        ResponseForRoomBooking responseForRoomBooking = new ResponseForRoomBooking();
+        responseForRoomBooking.setMessage("Available Double Rooms are " + availableRooms);
+        return responseForRoomBooking;
     }
     public List<Integer> listOfBookedSingleRooms(){
         List<Integer> bookedSingleRooms = new ArrayList<>();
@@ -203,7 +226,8 @@ public class RepositoryForReservations implements IReservationRepository {
     @Override
     public Reservation findReservationByEmail(String email) {
         for(Reservation customerReservation : reservations){
-            if(Objects.equals(customerReservation.getCustomer().getEmail(),email)) return customerReservation;
+//            if(Objects.equals(customerReservation.getCustomer().getEmail(),email)) return customerReservation;
+            if(customerReservation.getCustomer().getEmail().equals(email)) return customerReservation;
         }
         return null;
     }

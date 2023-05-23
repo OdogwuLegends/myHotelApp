@@ -1,38 +1,51 @@
 package africa.semicoon.LegendaryHotels.dto.response;
 
-import africa.semicoon.LegendaryHotels.models.RoomType;
+import africa.semicoon.LegendaryHotels.models.Customer;
+import africa.semicoon.LegendaryHotels.models.Reservation;
+import africa.semicoon.LegendaryHotels.models.Room;
 import lombok.Data;
-
-import java.util.Date;
 
 @Data
 public class ResponseForReservation {
-    private String firstName;
-    private String lastName;
-    private RoomType roomType;
-    private int roomChoice;
-    private int amount;
-    private Date checkInDate;
-    private Date checkOutDate;
+    private String message;
+    private Customer customer;
+    private Room room;
+    private Reservation reservation;
 
 
     @Override
     public String toString(){
         final StringBuffer sb = new StringBuffer();
         sb.append("\nPlease find your reservation");
+//
+//        for (int i = 0; i < 50; i++) { System.out.print("*"); }
+//        sb.append("\nName:: ").append(customer.getFirstName()).append(" ").append(customer.getLastName());
+//        for (int i = 0; i < 50; i++) { System.out.print("-"); }
+//        sb.append("\nRoom Type - ").append(room.getRoomType()).append(".");
+//        for (int i = 0; i < 50; i++) { System.out.print("-"); }
+//        sb.append("\nRoom Choice - ").append(room.getRoomNumber()).append(".");
+//        for (int i = 0; i < 50; i++) { System.out.print("-"); }
+//        sb.append("\nAmount paid - ").append(room.getPrice()).append(".");
+//        for (int i = 0; i < 50; i++) { System.out.print("-"); }
+//        sb.append("\nCheck in date - ").append(reservation.getCheckIn()).append(".");
+//        for (int i = 0; i < 50; i++) { System.out.print("-"); }
+//        sb.append("\nCheck out date - ").append(reservation.getCheckOut()).append(".");
+//        for (int i = 0; i < 50; i++) { System.out.print("*"); }
+
 
         for (int i = 0; i < 50; i++) { System.out.print("*"); }
-        sb.append("\nName:: ").append(firstName).append(" ").append(lastName);
+        sb.append("\nName:: ").append(reservation.getCustomer().getLastName()).append(" ").
+                append(reservation.getCustomer().getLastName());
         for (int i = 0; i < 50; i++) { System.out.print("-"); }
-        sb.append("\nRoom Type - ").append(roomType).append(".");
+        sb.append("\nRoom Type - ").append(reservation.getRoom().getRoomType()).append(".");
         for (int i = 0; i < 50; i++) { System.out.print("-"); }
-        sb.append("\nRoom Choice - ").append(roomChoice).append(".");
+        sb.append("\nRoom Choice - ").append(reservation.getRoom().getRoomNumber()).append(".");
         for (int i = 0; i < 50; i++) { System.out.print("-"); }
-        sb.append("\nAmount paid - ").append(amount).append(".");
+        sb.append("\nAmount paid - ").append(reservation.getRoom().getPrice()).append(".");
         for (int i = 0; i < 50; i++) { System.out.print("-"); }
-        sb.append("\nCheck in date - ").append(checkInDate).append(".");
+        sb.append("\nCheck in date - ").append(reservation.getCheckIn()).append(".");
         for (int i = 0; i < 50; i++) { System.out.print("-"); }
-        sb.append("\nCheck out date - ").append(checkOutDate).append(".");
+        sb.append("\nCheck out date - ").append(reservation.getCheckOut()).append(".");
         for (int i = 0; i < 50; i++) { System.out.print("*"); }
 
         return sb.toString();

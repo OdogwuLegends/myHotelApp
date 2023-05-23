@@ -50,6 +50,9 @@ public class ControllerForAdmins {
     public ResponseForReservation getCustomerReservation(RequestsForReservations requestsForReservations){
         return controllerForReservations.getCustomerReservation(requestsForReservations);
     }
+    public ResponseForReservation findReservationByEmail(String email){
+        return controllerForReservations.findReservationByEmail(email);
+    }
     public List<Customer> seeAllCustomers() {
         return controllerForCustomers.getAllCustomers();
     }

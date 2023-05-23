@@ -59,11 +59,22 @@ class RepositoryForCustomersTest {
         assertEquals(TWO,actual);
     }
 
+    @Test
+    void testToVerifyPassword(){
+        String firstPassword = "12345";
+        boolean actual = iCustomerRepository.verifyPassword(firstPassword);
+        assertTrue(actual);
+
+        String secondPassword = "22222";
+        assertEquals(secondCustomer.getPassword(),secondPassword);
+    }
+
     private Customer buildFirstCustomer(){
         Customer customer = new Customer();
         customer.setFirstName("Legends");
         customer.setLastName("Ken");
         customer.setEmail("Leg@gmail.com");
+        customer.setPassword("12345");
         return customer;
     }
     private Customer buildSecondCustomer(){
@@ -71,6 +82,7 @@ class RepositoryForCustomersTest {
         customer.setFirstName("Mike");
         customer.setLastName("Boyo");
         customer.setEmail("mike@gmail.com");
+        customer.setPassword("22222");
         return customer;
     }
     private Customer buildThirdCustomer(){
@@ -78,6 +90,7 @@ class RepositoryForCustomersTest {
         customer.setFirstName("Ned");
         customer.setLastName("Stark");
         customer.setEmail("lordStark@gmail.com");
+        customer.setPassword("33333");
         return customer;
     }
 

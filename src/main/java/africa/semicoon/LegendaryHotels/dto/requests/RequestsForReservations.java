@@ -29,5 +29,6 @@ public class RequestsForReservations {
     private int checkOutDate;
     private int checkOutMonth;
     private int checkOutYear;
+    private Reservation reservation;
 
 }

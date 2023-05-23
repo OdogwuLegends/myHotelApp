@@ -2,9 +2,12 @@ package africa.semicoon.LegendaryHotels.services;
 
 import africa.semicoon.LegendaryHotels.dto.requests.RequestsForReservations;
 import africa.semicoon.LegendaryHotels.dto.response.ResponseForReservation;
+import africa.semicoon.LegendaryHotels.dto.response.ResponseForRoomBooking;
+import africa.semicoon.LegendaryHotels.dto.response.RoomResponse;
 import africa.semicoon.LegendaryHotels.exceptions.AmountIncorrectException;
 import africa.semicoon.LegendaryHotels.exceptions.InvalidRoomNumberException;
 import africa.semicoon.LegendaryHotels.exceptions.RoomUnavailableException;
+import africa.semicoon.LegendaryHotels.models.Customer;
 import africa.semicoon.LegendaryHotels.models.Reservation;
 import africa.semicoon.LegendaryHotels.models.Room;
 import africa.semicoon.LegendaryHotels.models.RoomType;
@@ -22,7 +25,7 @@ public class ServiceForReservations implements IReservationService {
 
     IReservationRepository repositoryForReservation = new RepositoryForReservations();
     @Override
-    public String findARoom(int roomType) {
+    public ResponseForRoomBooking findARoom(int roomType) {
         RoomType type;
         if(roomType == 1){
             type = RoomType.SINGLE;
@@ -33,7 +36,7 @@ public class ServiceForReservations implements IReservationService {
     }
 
     @Override
-    public String reserveARoom(RequestsForReservations customerReservation) throws RoomUnavailableException, AmountIncorrectException {
+    public ResponseForRoomBooking reserveARoom(RequestsForReservations customerReservation) throws RoomUnavailableException, AmountIncorrectException {
         int roomChoiceNumber = customerReservation.getRoom().getRoomNumber();
         int amount = customerReservation.getRoom().getPrice();
         RoomType roomType = customerReservation.getRoom().getRoomType();
@@ -64,22 +67,33 @@ public class ServiceForReservations implements IReservationService {
     }
 
     @Override
-    public Room getRoom(RequestsForReservations customerReservation) {
+    public RoomResponse getRoom(RequestsForReservations customerReservation) {
         int roomNumberChoice = customerReservation.getRoom().getRoomNumber();
-        return repositoryForReservation.getRoom(roomNumberChoice);
+        Room foundRoom = repositoryForReservation.getRoom(roomNumberChoice);
+        RoomResponse roomResponse = new RoomResponse();
+        roomResponse.setRoomNumber(foundRoom.getRoomNumber());
+        roomResponse.setRoomPrice(foundRoom.getPrice());
+        roomResponse.setRoomType(foundRoom.getRoomType());
+
+        return roomResponse;
     }
 
     @Override
     public ResponseForReservation getCustomerReservation(RequestsForReservations customerReservation) {
-        String email = customerReservation.getCustomer().getEmail();
+        //String email = customerReservation.getCustomer().getEmail();
 
-        //Customer newCustomer = Map.requestToReservation(customerReservation).getCustomer();
-        //Reservation foundReservation = repositoryForReservation.getCustomerReservation(newCustomer);
-       return Map.olaMap(email);
+        Customer newCustomer = Map.requestToReservation(customerReservation).getCustomer();
+        Reservation foundReservation = repositoryForReservation.getCustomerReservation(newCustomer);
+       //return Map.olaMap(email);
+        return Map.reservationToReservationResponse(foundReservation);
+    }
+
+    public ResponseForReservation findReservationByEmail(String email){
+        return Map.reservationToResponse(email);
     }
 
     @Override
-    public String checkOut(RequestsForReservations customerReservation) throws InvalidRoomNumberException {
+    public ResponseForRoomBooking checkOut(RequestsForReservations customerReservation) throws InvalidRoomNumberException {
         int roomChoiceNumber = customerReservation.getRoom().getRoomNumber();
         RoomType roomType = customerReservation.getRoom().getRoomType();
         Date checkInDate = Map.setDate(customerReservation.getCheckInDate(), customerReservation.getCheckInMonth(), customerReservation.getCheckInYear());

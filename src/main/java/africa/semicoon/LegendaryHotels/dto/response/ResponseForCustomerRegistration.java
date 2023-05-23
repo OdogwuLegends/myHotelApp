@@ -8,6 +8,8 @@ public class ResponseForCustomerRegistration {
     private String firstName;
     private String lastName;
     private String message;
+    private String email;
+    private String password;
 
     @Override
     public String toString() {

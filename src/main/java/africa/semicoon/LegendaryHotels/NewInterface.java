@@ -68,9 +68,9 @@ public class NewInterface {
                 """);
         int roomType = Display.intInput("");
 
-        Display.message(reservationController.findARoom(roomType));
+        Display.message(reservationController.findARoom(roomType).getMessage());
 
-        String userResponse = Display.StringInput("\nDo you wish to proceed? Enter Yes/No.");
+        String userResponse = Display.StringInput("\nDo you wish to proceed? Enter Yes/No: ");
         int amount = 0;
         int roomNumber = 0;
         RoomType type = null;
@@ -96,7 +96,7 @@ public class NewInterface {
         int checkInYear = Display.intInput("Check In year: ");
         int checkOutDate = Display.intInput("Check out date: ");
         int checkOutMonth = Display.intInput("Check out month(in digits): ");
-        int checkOutYear = Display.intInput("Check out year: \n");
+        int checkOutYear = Display.intInput("Check out year: ");
 //
 //        String firstName = responseToFindByEmail.getFirstName();
 //        String lastName = responseToFindByEmail.getLastName();
@@ -131,7 +131,7 @@ public class NewInterface {
         requestsForReservations.setCheckOutYear(checkOutYear);
 
 
-        Display.message(reservationController.reserveARoom(requestsForReservations)+"\n");
+        Display.message("\n"+reservationController.reserveARoom(requestsForReservations).getMessage()+"\n");
 
         mainMenu();
     }
@@ -153,13 +153,20 @@ public class NewInterface {
         }
     }
 
-    public static ResponseForReservation printReservations() {
+    public static void printReservations() {
         RequestsForReservations requestsForReservations = new RequestsForReservations();
+        Customer customer = new Customer();
 
         String email = Display.StringInput("Enter your email: ");
-        //requestsForReservations.setEmail(email);
+        String FirstName = Display.StringInput("Enter First Name: ");
+        String lastName = Display.StringInput("Enter Last Name: ");
+        customer.setEmail(email);
+        customer.setFirstName(FirstName);
+        customer.setLastName(lastName);
+        requestsForReservations.setCustomer(customer);
 
-        return adminController.getCustomerReservation(requestsForReservations);
+        //Display.message(adminController.getCustomerReservation(requestsForReservations).getMessage());
+        Display.message(adminController.findReservationByEmail(email).toString());
     }
 
     private static ResponseToFindByEmail signIn(){

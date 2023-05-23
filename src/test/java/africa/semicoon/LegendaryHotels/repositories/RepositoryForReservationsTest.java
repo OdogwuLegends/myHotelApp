@@ -1,5 +1,7 @@
 package africa.semicoon.LegendaryHotels.repositories;
 
+import africa.semicoon.LegendaryHotels.dto.response.ResponseForReservation;
+import africa.semicoon.LegendaryHotels.dto.response.ResponseForRoomBooking;
 import africa.semicoon.LegendaryHotels.models.Customer;
 import africa.semicoon.LegendaryHotels.models.Reservation;
 import africa.semicoon.LegendaryHotels.models.Room;
@@ -8,7 +10,6 @@ import africa.semicoon.LegendaryHotels.utils.Map;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -18,31 +19,33 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RepositoryForReservationsTest {
     private final IReservationRepository reservationRepository = new RepositoryForReservations();
+    private final ResponseForRoomBooking response = new ResponseForRoomBooking();
 
     @Test
     void testToFindRoom(){
         RoomType roomType = SINGLE;
-       String expected = "Available Single Rooms are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, ";
-       String actual = reservationRepository.findARoom(roomType);
-        assertEquals(expected,actual);
-
+        response.setMessage("Available Single Rooms are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, ");
+        ResponseForRoomBooking actual = reservationRepository.findARoom(roomType);
+        assertEquals(response,actual);
 
         roomType = RoomType.DOUBLE;
-        expected = "Available Double Rooms are 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, ";
+        response.setMessage("Available Double Rooms are 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, ");
         actual = reservationRepository.findARoom(roomType);
-        assertEquals(expected,actual);
+        assertEquals(response,actual);
     }
     @Test
     void testToReserveARoom(){
        Reservation singleRoomCustomer =  buildSingleRoomReservation();
-       String expected = "Room 4 Booked Successfully";
-       String actual = reservationRepository.reserveARoom(singleRoomCustomer);
-       assertEquals(expected,actual);
+        response.setMessage("Room 4 Booked Successfully");
+
+        ResponseForRoomBooking actual = reservationRepository.reserveARoom(singleRoomCustomer);
+       assertEquals(response,actual);
 
        Reservation doubleRoomCustomer = buildDoubleRoomReservation();
-       expected = "Room 15 Booked Successfully";
+       response.setMessage("Room 15 Booked Successfully");
+
        actual = reservationRepository.reserveARoom(doubleRoomCustomer);
-       assertEquals(expected,actual);
+       assertEquals(response,actual);
 
     }
 
@@ -56,8 +59,8 @@ class RepositoryForReservationsTest {
         Room foundSingleRoom = reservationRepository.getRoom(4);
         Room foundDoubleRoom = reservationRepository.getRoom(15);
 
-        assertSame(singleRoomCustomer.getRoom(),foundSingleRoom);
-        assertSame(doubleRoomCustomer.getRoom(),foundDoubleRoom);
+        assertSame(singleRoomCustomer.getRoom().getRoomNumber(),foundSingleRoom.getRoomNumber());
+        assertSame(doubleRoomCustomer.getRoom().getRoomNumber(),foundDoubleRoom.getRoomNumber());
     }
 
     @Test
@@ -84,9 +87,10 @@ class RepositoryForReservationsTest {
         Date checkin = singleRoomCustomer.getCheckIn();
         Date checkOut = singleRoomCustomer.getCheckOut();
 
-        String expected = "Room 4 checkout Successful. Thank you for your patronage.";
-        String actual = reservationRepository.checkOut(checkin,checkOut);
-        assertEquals(expected,actual);
+        response.setMessage("Room 4 checkout Successful. Thank you for your patronage.");
+
+        ResponseForRoomBooking actual = reservationRepository.checkOut(checkin,checkOut);
+        assertEquals(response,actual);
         assertFalse(reservationRepository.getAllReservations().contains(singleRoomCustomer));
     }
     @Test
@@ -98,6 +102,7 @@ class RepositoryForReservationsTest {
 
         List<Reservation> allReservations = reservationRepository.getAllReservations();
         assertEquals(2,allReservations.size());
+        assertTrue(reservationRepository.getAllReservations().contains(doubleRoomCustomer));
     }
     @Test
     void testToShowBookedSingleRooms(){

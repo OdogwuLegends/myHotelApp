@@ -2,6 +2,7 @@ package africa.semicoon.LegendaryHotels.controller;
 
 import africa.semicoon.LegendaryHotels.dto.requests.RequestsForReservations;
 import africa.semicoon.LegendaryHotels.dto.response.ResponseForReservation;
+import africa.semicoon.LegendaryHotels.dto.response.ResponseForRoomBooking;
 import africa.semicoon.LegendaryHotels.exceptions.AmountIncorrectException;
 import africa.semicoon.LegendaryHotels.exceptions.InvalidRoomNumberException;
 import africa.semicoon.LegendaryHotels.exceptions.RoomUnavailableException;
@@ -13,15 +14,21 @@ import java.util.List;
 
 public class ControllerForReservations {
     private final IReservationService reservationService = new ServiceForReservations();
-    public String reserveARoom(RequestsForReservations requestsForReservations) {
+
+
+    public ResponseForRoomBooking reserveARoom(RequestsForReservations requestsForReservations) {
         try{
             return reservationService.reserveARoom(requestsForReservations);
         } catch (RoomUnavailableException | AmountIncorrectException ex){
             System.err.println(ex.getMessage());
         }
-        return "";
+        ResponseForRoomBooking responseForRoomBooking = new ResponseForRoomBooking();
+        responseForRoomBooking.setMessage("");
+        return responseForRoomBooking;
     }
-    public String findARoom(int roomType){
+
+    public ResponseForRoomBooking findARoom(int roomType){
+        ResponseForReservation response = new ResponseForReservation();
         return reservationService.findARoom(roomType);
     }
     public String getRoom(RequestsForReservations requestsForReservations){
@@ -30,7 +37,10 @@ public class ControllerForReservations {
     public ResponseForReservation getCustomerReservation(RequestsForReservations requestsForReservations){
         return reservationService.getCustomerReservation(requestsForReservations);
     }
-    public String checkOut(RequestsForReservations requestsForReservations){
+    public ResponseForReservation findReservationByEmail(String email){
+        return reservationService.findReservationByEmail(email);
+    }
+    public ResponseForRoomBooking checkOut(RequestsForReservations requestsForReservations){
         try{
             return reservationService.checkOut(requestsForReservations);
         } catch (InvalidRoomNumberException ex){

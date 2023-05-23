@@ -14,7 +14,6 @@ import africa.semicoon.LegendaryHotels.repositories.RepositoryForReservations;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Objects;
 
 import static africa.semicoon.LegendaryHotels.utils.AppUtils.ONE;
 import static africa.semicoon.LegendaryHotels.utils.AppUtils.emailIsCorrect;
@@ -49,7 +48,7 @@ public class Map {
             throw new InvalidEmailException("Invalid email.");
         }
         newCustomer.setEmail(requestsForCustomers.getEmail());
-        newCustomer.setPassword(newCustomer.getPassword());
+        newCustomer.setPassword(requestsForCustomers.getPassword());
         return newCustomer;
     }
     public static Admin requestToAdmin(RequestsForAdmins requestsForAdmins){
@@ -77,6 +76,8 @@ public class Map {
         ResponseForCustomerRegistration responseForCustomerRegistration = new ResponseForCustomerRegistration();
         responseForCustomerRegistration.setFirstName(customer.getFirstName());
         responseForCustomerRegistration.setLastName(customer.getLastName());
+        responseForCustomerRegistration.setEmail(customer.getEmail());
+        responseForCustomerRegistration.setPassword(customer.getPassword());
         return responseForCustomerRegistration;
     }
 
@@ -123,8 +124,7 @@ public class Map {
     }
 
 
-    public static ResponseForReservation olaMap(String email){
-        System.out.println("Na here i dey ooooooooooooo");
+    public static ResponseForReservation reservationToResponse(String email){
         IReservationRepository reservationRepository = new RepositoryForReservations();
 
         Reservation foundReservation = reservationRepository.findReservationByEmail(email);
@@ -133,39 +133,42 @@ public class Map {
 
 
         if (foundReservation != null){
-        responseForReservation.setFirstName(foundReservation.getCustomer().getFirstName());
-        responseForReservation.setLastName(foundReservation.getCustomer().getLastName());
-        responseForReservation.setAmount(foundReservation.getRoom().getPrice());
-        responseForReservation.setRoomChoice(foundReservation.getRoom().getRoomNumber());
-        responseForReservation.setRoomType(foundReservation.getRoom().getRoomType());
-        responseForReservation.setCheckInDate(foundReservation.getCheckIn());
-        responseForReservation.setCheckOutDate(foundReservation.getCheckOut());
+            Customer customer = new Customer();
+            customer.setFirstName(foundReservation.getCustomer().getFirstName());
+            customer.setLastName(foundReservation.getCustomer().getLastName());
+            customer.setEmail(foundReservation.getCustomer().getEmail());
+
+            Room room = new Room();
+            room.setPrice(foundReservation.getRoom().getPrice());
+            room.setRoomNumber(foundReservation.getRoom().getRoomNumber());
+            room.setRoomType(foundReservation.getRoom().getRoomType());
+
+//            Reservation reservation = new Reservation();
+//            reservation.setCheckIn(foundReservation.getCheckIn());
+//            reservation.setCheckOut(foundReservation.getCheckOut());
+
+            responseForReservation.setCustomer(customer);
+            responseForReservation.setRoom(room);
+            responseForReservation.setReservation(foundReservation);
+
         }
 
         return responseForReservation;
     }
     public static ResponseForReservation reservationToReservationResponse(Reservation reservation){
-        ResponseForReservation responseForReservation = new ResponseForReservation();
-
-
         Customer foundCustomer = reservation.getCustomer();
         Room room = reservation.getRoom();
-        Date foundCheckIn = reservation.getCheckIn();
-        Date foundCheckOut = reservation.getCheckOut();
 
-        responseForReservation.setFirstName(foundCustomer.getFirstName());
-        responseForReservation.setLastName(foundCustomer.getLastName());
-        responseForReservation.setAmount(room.getPrice());
-        responseForReservation.setRoomType(room.getRoomType());
-        responseForReservation.setRoomChoice(room.getRoomNumber());
-        responseForReservation.setCheckInDate(foundCheckIn);
-        responseForReservation.setCheckOutDate(foundCheckOut);
+        ResponseForReservation responseForReservation = new ResponseForReservation();
+        responseForReservation.setCustomer(foundCustomer);
+        responseForReservation.setRoom(room);
+        responseForReservation.setReservation(reservation);
 
         return responseForReservation;
     }
     
 
-    public static Date setDate(int date, int month, int year){
+    public static Date setDate(int year, int month, int date){
         Calendar newDate = Calendar.getInstance();
         newDate.set(year,month - ONE,date);
 

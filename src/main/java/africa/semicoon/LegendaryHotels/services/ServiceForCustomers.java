@@ -41,12 +41,13 @@ public class ServiceForCustomers implements ICustomerService{
         if(customer == null) {
            throw new EntityDoesNotExistException("Customer does not exist.");
         }
-        else {
-//            getEmailResponse.setFirstName(customer.getFirstName());
-//            getEmailResponse.setLastName(customer.getLastName());
-//            getEmailResponse.setEmail(customer.getEmail());
-            responseToFindByEmail = Map.customerToEmailResponse(customer);
-        }
+//        else {
+////            getEmailResponse.setFirstName(customer.getFirstName());
+////            getEmailResponse.setLastName(customer.getLastName());
+////            getEmailResponse.setEmail(customer.getEmail());
+//
+//        }
+        responseToFindByEmail = Map.customerToEmailResponse(customer);
         return responseToFindByEmail;
     }
 
@@ -55,13 +56,12 @@ public class ServiceForCustomers implements ICustomerService{
         if(!emailIsCorrect(newRequestsForCustomers.getEmail())){
             throw new InvalidEmailException("Invalid email.");
         }
-        String email = newRequestsForCustomers.getEmail();
 
-        if(email == null){
+        if(newRequestsForCustomers.getEmail() == null) {
             throw new EntityDoesNotExistException("Customer does not exist.");
-        } else{
-            customerRepository.deleteByEmail(email);
         }
+
+        customerRepository.deleteByEmail(newRequestsForCustomers.getEmail());
 
         ResponseForDelete responseForDelete = new ResponseForDelete();
         responseForDelete.setMessage("Customer successfully deleted.");

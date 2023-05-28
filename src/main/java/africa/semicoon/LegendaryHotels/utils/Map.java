@@ -3,17 +3,17 @@ package africa.semicoon.LegendaryHotels.utils;
 import africa.semicoon.LegendaryHotels.dto.requests.RequestsForAdmins;
 import africa.semicoon.LegendaryHotels.dto.requests.RequestsForCustomers;
 import africa.semicoon.LegendaryHotels.dto.requests.RequestsForReservations;
-import africa.semicoon.LegendaryHotels.dto.response.ResponseForAdminRegistration;
-import africa.semicoon.LegendaryHotels.dto.response.ResponseForCustomerRegistration;
-import africa.semicoon.LegendaryHotels.dto.response.ResponseForReservation;
-import africa.semicoon.LegendaryHotels.dto.response.ResponseToFindByEmail;
+import africa.semicoon.LegendaryHotels.dto.response.*;
 import africa.semicoon.LegendaryHotels.exceptions.InvalidEmailException;
 import africa.semicoon.LegendaryHotels.models.*;
 import africa.semicoon.LegendaryHotels.repositories.IReservationRepository;
 import africa.semicoon.LegendaryHotels.repositories.RepositoryForReservations;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Scanner;
 
 import static africa.semicoon.LegendaryHotels.utils.AppUtils.ONE;
 import static africa.semicoon.LegendaryHotels.utils.AppUtils.emailIsCorrect;
@@ -27,8 +27,11 @@ public class Map {
 
         //RoomType roomType = roomDetail(requestsForReservations);
 
-        Date checkIn = setDate(requestsForReservations.getCheckInDate(), requestsForReservations.getCheckInMonth(), requestsForReservations.getCheckInYear());
-        Date checkOut = setDate(requestsForReservations.getCheckOutDate(), requestsForReservations.getCheckOutMonth(), requestsForReservations.getCheckOutYear());
+        //Date checkIn = setDate(requestsForReservations.getCheckInDate(), requestsForReservations.getCheckInMonth(), requestsForReservations.getCheckInYear());
+        //Date checkOut = setDate(requestsForReservations.getCheckOutDate(), requestsForReservations.getCheckOutMonth(), requestsForReservations.getCheckOutYear());
+
+        LocalDate checkIn = getDateFromUser(requestsForReservations.getCheckIn());
+        LocalDate checkOut = getDateFromUser(requestsForReservations.getCheckOut());
 
         Reservation customerReservation = new Reservation();
 
@@ -38,6 +41,11 @@ public class Map {
         customerReservation.setCheckOut(checkOut);
 
         return customerReservation;
+
+    }
+    public static Customer reservationRequestToCustomer(RequestsForReservations requestsForReservations){
+        Customer customer = requestsForReservations.getCustomer();
+        return customer;
 
     }
     public static Customer requestToCustomer(RequestsForCustomers requestsForCustomers) {
@@ -61,6 +69,17 @@ public class Map {
 
         return newAdmin;
     }
+
+//    public static RoomResponse requestToRoomResponse(RequestsForReservations requestsForReservations){
+//        int roomNumberChoice = requestsForReservations.getRoom().getRoomNumber();
+//        Room foundRoom = requestsForReservations.getRoom(roomNumberChoice);
+//        RoomResponse roomResponse = new RoomResponse();
+//        roomResponse.setRoomNumber(foundRoom.getRoomNumber());
+//        roomResponse.setRoomPrice(foundRoom.getPrice());
+//        roomResponse.setRoomType(foundRoom.getRoomType());
+//
+//        return roomResponse;
+//    }
 
     public static ResponseToFindByEmail customerToEmailResponse(Customer customer){
         ResponseToFindByEmail responseToFindByEmail = new ResponseToFindByEmail();
@@ -124,13 +143,9 @@ public class Map {
     }
 
 
-    public static ResponseForReservation reservationToResponse(String email){
-        IReservationRepository reservationRepository = new RepositoryForReservations();
-
-        Reservation foundReservation = reservationRepository.findReservationByEmail(email);
+    public static ResponseForReservation reservationToResponse(Reservation foundReservation){
 
         ResponseForReservation responseForReservation = new ResponseForReservation();
-
 
         if (foundReservation != null){
             Customer customer = new Customer();
@@ -142,10 +157,6 @@ public class Map {
             room.setPrice(foundReservation.getRoom().getPrice());
             room.setRoomNumber(foundReservation.getRoom().getRoomNumber());
             room.setRoomType(foundReservation.getRoom().getRoomType());
-
-//            Reservation reservation = new Reservation();
-//            reservation.setCheckIn(foundReservation.getCheckIn());
-//            reservation.setCheckOut(foundReservation.getCheckOut());
 
             responseForReservation.setCustomer(customer);
             responseForReservation.setRoom(room);
@@ -174,5 +185,11 @@ public class Map {
 
         return newDate.getTime();
     }
+
+    public static LocalDate getDateFromUser(String userInput) {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return LocalDate.parse(userInput, dateFormatter);
+    }
+
 
 }

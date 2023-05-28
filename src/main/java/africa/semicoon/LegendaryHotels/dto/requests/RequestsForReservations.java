@@ -23,12 +23,14 @@ public class RequestsForReservations {
 
     private Customer customer;
     private Room room;
-    private int checkInDate;
-    private int checkInMonth;
-    private int checkInYear;
-    private int checkOutDate;
-    private int checkOutMonth;
-    private int checkOutYear;
+//    private int checkInDate;
+//    private int checkInMonth;
+//    private int checkInYear;
+//    private int checkOutDate;
+//    private int checkOutMonth;
+//    private int checkOutYear;
+    private String checkIn;
+    private String checkOut;
     private Reservation reservation;
 
 }

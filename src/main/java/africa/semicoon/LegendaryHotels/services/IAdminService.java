@@ -12,7 +12,10 @@ import java.util.List;
 
 public interface IAdminService {
     ResponseForAdminRegistration registerAdmin(RequestsForAdmins requestsForAdmins);
-    ResponseToFindByEmail findAdminByEmail(RequestsForAdmins requestsForAdmins) throws InvalidEmailException, EntityDoesNotExistException;
+    ResponseToFindByEmail findAdminByEmail(RequestsForAdmins requestsForAdmins);
+    boolean verifyAdminCode(int code);
+    boolean verifyAdminPassword(String password);
+    boolean verifyAdminByEmail(String email);
     List<Admin> getAllAdmins();
     ResponseForDelete deleteByEmail(RequestsForAdmins requestsForAdmins) throws InvalidEmailException, EntityDoesNotExistException;
 }

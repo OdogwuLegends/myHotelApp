@@ -3,9 +3,9 @@ package africa.semicoon.LegendaryHotels;
 import africa.semicoon.LegendaryHotels.controller.ControllerForAdmins;
 import africa.semicoon.LegendaryHotels.controller.ControllerForCustomers;
 import africa.semicoon.LegendaryHotels.controller.ControllerForReservations;
+import africa.semicoon.LegendaryHotels.dto.requests.RequestsForAdmins;
 import africa.semicoon.LegendaryHotels.dto.requests.RequestsForCustomers;
 import africa.semicoon.LegendaryHotels.dto.requests.RequestsForReservations;
-import africa.semicoon.LegendaryHotels.dto.response.ResponseForReservation;
 import africa.semicoon.LegendaryHotels.dto.response.ResponseToFindByEmail;
 import africa.semicoon.LegendaryHotels.models.Customer;
 import africa.semicoon.LegendaryHotels.models.Room;
@@ -18,10 +18,14 @@ import java.util.Objects;
 public class NewInterface {
     private static final ControllerForReservations reservationController = new ControllerForReservations();
     private static final ControllerForCustomers customerController = new ControllerForCustomers();
-
     private static final ControllerForAdmins adminController = new ControllerForAdmins();
 
-    public static void mainMenu() {
+
+    public static void main(String[] args) {
+        mainMenu();
+    }
+
+    private static void mainMenu() {
         Display.message("""
                 1. Find and reserve a Room.
                 2. See my reservations.
@@ -34,31 +38,43 @@ public class NewInterface {
         switch (userInput){
             case 1 -> findAndReserveARoom();
             case 2 -> printReservations();
-            case 3 -> createAccountAndReserveRoom();
-            case 4 -> admin();
+            case 3 -> createAccountForCustomerAndReserveRoom();
+            case 4 -> adminLogin();
             case 5 -> System.exit(10);
         }
     }
 
-
-    public static void main(String[] args) {
-        mainMenu();
-    }
-
-    public static void findAndReserveARoom() {
+    private static void findAndReserveARoom() {
         Display.message("\n1. Sign in || 2. Sign up");
         int userInput = Display.intInput("");
         switch (userInput){
             case 1 -> ReserveARoom();
-            case 2 -> createAccountAndReserveRoom();
+            case 2 -> createAccountForCustomerAndReserveRoom();
         }
     }
-    public static void createAccountAndReserveRoom(){
-        createAccount();
+
+    private static void printReservations() {
+        String email = Display.StringInput("Enter your email: ");
+        Display.message(reservationController.findReservationByEmail(email).toString());
+        mainMenu();
+    }
+
+    private static void createAccountForCustomerAndReserveRoom(){
+        createAccountForCustomer();
         ReserveARoom();
     }
-    public static void ReserveARoom(){
-        //ResponseToFindByEmail responseToFindByEmail = signIn();
+
+    private static void adminLogin(){
+        Display.message("\n1. Sign in || 2. Sign up");
+        int userInput = Display.intInput("");
+        switch (userInput){
+            case 1 -> adminPage();
+            case 2 -> createAccountForAdmin();
+        }
+    }
+    private static void ReserveARoom(){
+        Display.message("\nPlease sign in below to continue; \n");
+        ResponseToFindByEmail responseToFindByEmail = signInForCustomer();
 
         RequestsForReservations requestsForReservations = new RequestsForReservations();
 
@@ -82,63 +98,59 @@ public class NewInterface {
             if(roomType == 1){
                 type = RoomType.SINGLE;
                 amount =  Display.intInput("Enter amount($20): ");
-                //Display.message(reservationController.reserveARoom(requestsForReservations));
             } else {
                 type = RoomType.DOUBLE;
                 amount = Display.intInput("Enter amount($50): ");
-                //Display.message(reservationController.reserveARoom(requestsForReservations));
             }
+
+            String checkIn = Display.StringInput("Enter Check in date(DD/MM/YYYY): ");
+            while (checkIn.length() != 10){
+                Display.message("\nWrong input. Please use the correct format.");
+                checkIn = Display.StringInput("Enter Check in date(DD/MM/YYYY): ");
+            }
+            String checkOut = Display.StringInput("Enter Check out date(DD/MM/YYYY): ");
+            while (checkOut.length() != 10){
+                Display.message("\nWrong input. Please use the correct format.");
+                checkOut = Display.StringInput("Enter Check in date(DD/MM/YYYY): ");
+            }
+
+            String firstName = responseToFindByEmail.getFirstName();
+            String lastName = responseToFindByEmail.getLastName();
+            String email = responseToFindByEmail.getEmail();
+            String password = responseToFindByEmail.getPassword();
+
+            Customer newCustomer = new Customer();
+            newCustomer.setFirstName(firstName);
+            newCustomer.setLastName(lastName);
+            newCustomer.setEmail(email);
+            newCustomer.setPassword(password);
+            requestsForReservations.setCustomer(newCustomer);
+
+            Room room = new Room();
+            room.setRoomNumber(roomNumber);
+            room.setPrice(amount);
+            room.setRoomType(type);
+            requestsForReservations.setRoom(room);
+
+            requestsForReservations.setCheckIn(checkIn);
+            requestsForReservations.setCheckOut(checkOut);
+
+
+            Display.message("\n"+reservationController.reserveARoom(requestsForReservations).getMessage()+"\n");
+
+            mainMenu();
+        } else {
+            System.out.println();
+            mainMenu();
         }
-
-
-        int checkInDate = Display.intInput("Check In date: ");
-        int checkInMonth = Display.intInput("Check In month(in digits): ");
-        int checkInYear = Display.intInput("Check In year: ");
-        int checkOutDate = Display.intInput("Check out date: ");
-        int checkOutMonth = Display.intInput("Check out month(in digits): ");
-        int checkOutYear = Display.intInput("Check out year: ");
-//
-//        String firstName = responseToFindByEmail.getFirstName();
-//        String lastName = responseToFindByEmail.getLastName();
-//        String email = responseToFindByEmail.getEmail();
-
-
-        String firstName = Display.StringInput("Enter First Name: ");
-        String lastName = Display.StringInput("Enter Last name: ");
-        String email = Display.StringInput("Enter email: ");
-        String password = Display.StringInput("Enter password: ");
-
-
-        Customer newCustomer = new Customer();
-        newCustomer.setFirstName(firstName);
-        newCustomer.setLastName(lastName);
-        newCustomer.setEmail(email);
-        newCustomer.setPassword(password);
-        requestsForReservations.setCustomer(newCustomer);
-
-        Room room = new Room();
-        room.setRoomNumber(roomNumber);
-        room.setPrice(amount);
-        room.setRoomType(type);
-        requestsForReservations.setRoom(room);
-
-
-        requestsForReservations.setCheckInDate(checkInDate);
-        requestsForReservations.setCheckInMonth(checkInMonth);
-        requestsForReservations.setCheckInYear(checkInYear);
-        requestsForReservations.setCheckOutDate(checkOutDate);
-        requestsForReservations.setCheckOutMonth(checkOutMonth);
-        requestsForReservations.setCheckOutYear(checkOutYear);
-
-
-        Display.message("\n"+reservationController.reserveARoom(requestsForReservations).getMessage()+"\n");
-
-        mainMenu();
     }
 
-    private static void admin() {
+    private static void adminPage() {
+        Display.message("\nPlease sign in below to continue; \n");
+        signInForAdmin();
+        verifyAdminLoginCode();
         Display.message("""
-                1. See all Customers.
+                \n1. See all Customers.
                 2. See all Rooms.
                 3. See all Reservations.
                 4. Back to Main Menu
@@ -146,34 +158,22 @@ public class NewInterface {
 
         int userInput = Display.intInput("");
         switch (userInput){
-            case 1 -> adminController.seeAllCustomers();
-            case 2 -> adminController.showAllRooms();
-            case 3 -> adminController.seeAllReservations();
+            case 1 -> Display.message(adminController.seeAllCustomers().toString());
+            case 2 -> Display.message(adminController.showAllRooms().toString());
+            case 3 -> Display.message(adminController.seeAllReservations().toString());
             case 4 -> mainMenu();
         }
+        System.out.println();
+        mainMenu();
     }
 
-    public static void printReservations() {
-        RequestsForReservations requestsForReservations = new RequestsForReservations();
-        Customer customer = new Customer();
-
-        String email = Display.StringInput("Enter your email: ");
-        String FirstName = Display.StringInput("Enter First Name: ");
-        String lastName = Display.StringInput("Enter Last Name: ");
-        customer.setEmail(email);
-        customer.setFirstName(FirstName);
-        customer.setLastName(lastName);
-        requestsForReservations.setCustomer(customer);
-
-        //Display.message(adminController.getCustomerReservation(requestsForReservations).getMessage());
-        Display.message(adminController.findReservationByEmail(email).toString());
-    }
-
-    private static ResponseToFindByEmail signIn(){
-        String email = Display.StringInput("Enter email to sign in: ");
-        String password = Display.StringInput("Enter password to sign in: ");
-        customerController.verifyPassword(password);
-        //passwordIsCorrect(password);
+    private static ResponseToFindByEmail signInForCustomer(){
+        String email = validEmail();
+        if(!customerController.verifyCustomerByEmail(email)){
+            System.out.println("Customer does not exist.\n");
+            mainMenu();
+        }
+        verifyCustomerPassword();
 
         RequestsForCustomers requestsForCustomers = new RequestsForCustomers();
         requestsForCustomers.setEmail(email);
@@ -181,16 +181,13 @@ public class NewInterface {
         return customerController.findCustomerByEmail(requestsForCustomers);
     }
 
-    private static void createAccount(){
+    private static void createAccountForCustomer(){
         String firstName = Display.StringInput("First Name: ");
         String lastName = Display.StringInput("Last Name: ");
+        String email = validEmail();
         String password = Display.StringInput("Set password: ");
         String reconfirmPassword = reconfirmPassword(password);
-        String email = Display.StringInput("Email address: ");
-        while(!AppUtils.emailIsCorrect(email)){
-            Display.message("Wrong email address.");
-            email= Display.StringInput("Enter correct Email address : ");
-        }
+
         RequestsForCustomers requestsForCustomers = new RequestsForCustomers();
         requestsForCustomers.setFirstName(firstName);
         requestsForCustomers.setLastName(lastName);
@@ -198,6 +195,58 @@ public class NewInterface {
         requestsForCustomers.setPassword(reconfirmPassword);
 
         Display.message(customerController.saveCustomer(requestsForCustomers).toString());
+    }
+
+    private static void createAccountForAdmin(){
+        String firstName = Display.StringInput("First Name: ");
+        String lastName = Display.StringInput("Last Name: ");
+        String email = validEmail();
+        String password = Display.StringInput("Set password: ");
+        String reconfirmPassword = reconfirmPassword(password);
+
+        RequestsForAdmins requestsForAdmins = new RequestsForAdmins();
+        requestsForAdmins.setFirstName(firstName);
+        requestsForAdmins.setLastName(lastName);
+        requestsForAdmins.setEmail(email);
+        requestsForAdmins.setPassword(reconfirmPassword);
+
+        Display.message(adminController.registerAdmin(requestsForAdmins).toString());
+        adminPage();
+    }
+
+    private static ResponseToFindByEmail signInForAdmin(){
+        String email = validEmail();
+        if(!adminController.verifyAdminByEmail(email)){
+            System.out.println("Admin does not exist.\n");
+            mainMenu();
+        }
+        verifyAdminPassword();
+
+        RequestsForAdmins requestsForAdmins = new RequestsForAdmins();
+        requestsForAdmins.setEmail(email);
+
+        return adminController.findAdminByEmail(requestsForAdmins);
+
+    }
+
+    private static String validEmail() {
+        String email = Display.StringInput("Enter email address: ");
+        int trial = 2;
+        while(!AppUtils.emailIsCorrect(email)){
+            if(trial == 0){
+                Display.message("\nLimited exceeded. Try again later.");
+                System.exit(16);
+            }if(trial == 1){
+                Display.errorMessage("Incorrect email format. You have "+trial+" trial left.");
+                email = Display.StringInput("\nEnter email: ");
+            } else {
+                Display.errorMessage("Incorrect email format. You have "+trial+" trials left.");
+                email = Display.StringInput("\nEnter email: ");
+            }
+
+            trial--;
+        }
+        return email;
     }
 
     private static String reconfirmPassword(String password){
@@ -221,7 +270,8 @@ public class NewInterface {
 
         return reconfirmPassword;
     }
-    private static String passwordIsCorrect(String password){
+    private static String verifyCustomerPassword(){
+        String password = Display.StringInput("Enter password: ");
 
         int trial = 2;
         while (!customerController.verifyPassword(password)){
@@ -238,4 +288,41 @@ public class NewInterface {
         }
         return password;
     }
+
+    private static String verifyAdminPassword(){
+        String password = Display.StringInput("Enter password: ");
+
+        int trial = 2;
+        while (!adminController.verifyAdminPassword(password)){
+            if(trial == 0){
+                Display.message("\nLimited exceeded. Try again later.");
+                System.exit(17);
+            }if(trial == 1){
+                Display.errorMessage("Wrong Password. You have "+trial+" trial left.");
+            } else {
+                Display.errorMessage("Wrong Password. You have "+trial+" trials left.");
+            }
+            password = Display.StringInput("\nEnter password: ");
+            trial--;
+        }
+        return password;
+    }
+    private static void verifyAdminLoginCode() {
+        int code  = Display.intInput("Enter your Admin Login Code: ");
+        int trial = 2;
+        while (!adminController.verifyAdminCode(code)){
+            if(trial == 0){
+                Display.message("\nLimited exceeded. Try again later.");
+                System.exit(19);
+            }if(trial == 1){
+                Display.errorMessage("Wrong Code. You have "+trial+" trial left.");
+            } else {
+                Display.errorMessage("Wrong Code. You have "+trial+" trials left.");
+            }
+            code = Display.intInput("\nEnter code: ");
+            trial--;
+
+        }
+    }
+
 }

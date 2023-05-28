@@ -13,7 +13,7 @@ public class ResponseForAdminRegistration {
     public String toString(){
         final StringBuffer sb = new StringBuffer();
 
-        sb.append("\nHello ").append(firstName).append(".");
+        sb.append("\nHello ").append(firstName).append(",");
         sb.append("\nYour account has been created as an Admin.");
         sb.append("\nYour log in code is: ").append(adminLoginCode);
 

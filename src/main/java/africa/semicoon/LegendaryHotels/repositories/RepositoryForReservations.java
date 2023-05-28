@@ -7,6 +7,7 @@ import africa.semicoon.LegendaryHotels.models.Reservation;
 import africa.semicoon.LegendaryHotels.models.Room;
 import africa.semicoon.LegendaryHotels.models.RoomType;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +17,7 @@ import static africa.semicoon.LegendaryHotels.models.RoomType.SINGLE;
 
 public class RepositoryForReservations implements IReservationRepository {
 
-    private List<Reservation> reservations = new ArrayList<>();
+    private static List<Reservation> reservations = new ArrayList<>();
     private int[] rooms = new int[20];
 
     @Override
@@ -51,11 +52,11 @@ public class RepositoryForReservations implements IReservationRepository {
             if(Objects.equals(customerReservation.getCustomer(),customer)) return customerReservation;
             //if(customerReservation.getCustomer().getEmail().equals(customer.getEmail())) return customerReservation;
         }
-        return null;
+        return new Reservation();
     }
 
     @Override
-    public ResponseForRoomBooking checkOut(Date checkInDate, Date checkOutDate) {
+    public ResponseForRoomBooking checkOut(LocalDate checkInDate, LocalDate checkOutDate) {
         RoomType roomType = null;
         int roomNumberChoice = 0;
         for (Reservation customerReservation : reservations){
@@ -226,8 +227,8 @@ public class RepositoryForReservations implements IReservationRepository {
     @Override
     public Reservation findReservationByEmail(String email) {
         for(Reservation customerReservation : reservations){
-//            if(Objects.equals(customerReservation.getCustomer().getEmail(),email)) return customerReservation;
-            if(customerReservation.getCustomer().getEmail().equals(email)) return customerReservation;
+            if(Objects.equals(customerReservation.getCustomer().getEmail(),email)) return customerReservation;
+            //if(customerReservation.getCustomer().getEmail().equals(email)) return customerReservation;
         }
         return null;
     }

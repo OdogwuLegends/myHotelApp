@@ -42,5 +42,11 @@ public class RepositoryForCustomers implements ICustomerRepository {
         }
         return false;
     }
+    public boolean verifyCustomerByEmail(String email){
+        for(Customer foundCustomer : customers){
+            if(Objects.equals(foundCustomer.getEmail(),email)) return true;
+        }
+        return false;
+    }
 
 }

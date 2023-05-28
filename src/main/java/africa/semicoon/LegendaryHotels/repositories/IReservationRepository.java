@@ -7,6 +7,7 @@ import africa.semicoon.LegendaryHotels.models.Reservation;
 import africa.semicoon.LegendaryHotels.models.Room;
 import africa.semicoon.LegendaryHotels.models.RoomType;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface IReservationRepository {
     ResponseForRoomBooking reserveARoom(Reservation customerReservation);
     Room getRoom(int roomNumber);
     Reservation getCustomerReservation(Customer customer);
-    ResponseForRoomBooking checkOut(Date checkInDate, Date checkOutDate);
+    ResponseForRoomBooking checkOut(LocalDate checkInDate, LocalDate checkOutDate);
     List<Reservation> getAllReservations();
     List<Integer> listOfBookedSingleRooms();
     List<Integer> listOfBookedDoubleRooms();

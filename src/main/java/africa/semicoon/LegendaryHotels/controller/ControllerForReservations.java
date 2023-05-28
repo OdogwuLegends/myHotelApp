@@ -34,9 +34,6 @@ public class ControllerForReservations {
     public String getRoom(RequestsForReservations requestsForReservations){
         return reservationService.getRoom(requestsForReservations).toString();
     }
-    public ResponseForReservation getCustomerReservation(RequestsForReservations requestsForReservations){
-        return reservationService.getCustomerReservation(requestsForReservations);
-    }
     public ResponseForReservation findReservationByEmail(String email){
         return reservationService.findReservationByEmail(email);
     }

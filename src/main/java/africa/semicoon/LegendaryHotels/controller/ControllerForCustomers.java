@@ -47,4 +47,5 @@ public class ControllerForCustomers {
     }
 
     public boolean verifyPassword(String password){ return customerService.verifyPassword(password);}
+    public boolean verifyCustomerByEmail(String email){ return customerService.verifyCustomerByEmail(email); }
 }

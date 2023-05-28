@@ -30,23 +30,38 @@ public class ServiceForAdmins implements IAdminService{
     }
 
     @Override
-    public ResponseToFindByEmail findAdminByEmail(RequestsForAdmins requestsForAdmins) throws InvalidEmailException, EntityDoesNotExistException {
+    public ResponseToFindByEmail findAdminByEmail(RequestsForAdmins requestsForAdmins) {
         String email = requestsForAdmins.getEmail();
-        if(!emailIsCorrect(email)){
-            throw new InvalidEmailException("Invalid email.");
-        }
+//        if(!emailIsCorrect(email)){
+//            throw new InvalidEmailException("Invalid email.");
+//        }
 
         ResponseToFindByEmail responseToFindByEmail;
         Admin foundAmin = adminRepository.findAdminByEmail(email);
-        if(foundAmin == null){
-            throw new EntityDoesNotExistException("Admin does not exist");
-        } else {
-//            getEmailResponse.setFirstName(foundAmin.getFirstName());
-//            getEmailResponse.setLastName(foundAmin.getLastName());
-//            getEmailResponse.setEmail(foundAmin.getEmail());
-            responseToFindByEmail = Map.adminToEmailResponse(foundAmin);
-        }
+//        if(foundAmin == null){
+//            throw new EntityDoesNotExistException("Admin does not exist");
+//        } else {
+////            getEmailResponse.setFirstName(foundAmin.getFirstName());
+////            getEmailResponse.setLastName(foundAmin.getLastName());
+////            getEmailResponse.setEmail(foundAmin.getEmail());
+//        }
+        responseToFindByEmail = Map.adminToEmailResponse(foundAmin);
         return responseToFindByEmail;
+    }
+
+    @Override
+    public boolean verifyAdminCode(int code) {
+        return adminRepository.verifyAdminCode(code);
+    }
+
+    @Override
+    public boolean verifyAdminPassword(String password) {
+        return adminRepository.verifyAdminPassword(password);
+    }
+
+    @Override
+    public boolean verifyAdminByEmail(String email) {
+        return adminRepository.verifyAdminByEmail(email);
     }
 
     @Override

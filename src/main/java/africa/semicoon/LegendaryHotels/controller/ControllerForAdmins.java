@@ -25,34 +25,41 @@ public class ControllerForAdmins {
         try {
             return adminService.registerAdmin(requestsForAdmins);
         } catch (InvalidEmailException ex){
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
         }
         return new ResponseForAdminRegistration();
     }
 
     public ResponseToFindByEmail findAdminByEmail(RequestsForAdmins requestsForAdmins){
-        try {
-            return adminService.findAdminByEmail(requestsForAdmins);
-        } catch (InvalidEmailException | EntityDoesNotExistException ex){
-            System.out.println(ex.getMessage());
-        }
-        return new ResponseToFindByEmail();
+//        try {
+//            return adminService.findAdminByEmail(requestsForAdmins);
+//        } catch (InvalidEmailException | EntityDoesNotExistException ex){
+//            System.err.println(ex.getMessage());
+//        }
+//        return new ResponseToFindByEmail();
+        return adminService.findAdminByEmail(requestsForAdmins);
     }
 
     public ResponseForDelete deleteAdminByEmail(RequestsForAdmins requestsForAdmins){
         try {
             adminService.deleteByEmail(requestsForAdmins);
         } catch (InvalidEmailException | EntityDoesNotExistException ex){
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
         }
         return new ResponseForDelete();
     }
-    public ResponseForReservation getCustomerReservation(RequestsForReservations requestsForReservations){
-        return controllerForReservations.getCustomerReservation(requestsForReservations);
+
+    public boolean verifyAdminCode(int code) {
+        return adminService.verifyAdminCode(code);
     }
-    public ResponseForReservation findReservationByEmail(String email){
-        return controllerForReservations.findReservationByEmail(email);
+
+    public boolean verifyAdminPassword(String password){
+        return adminService.verifyAdminPassword(password);
     }
+    public boolean verifyAdminByEmail(String email){
+        return adminService.verifyAdminByEmail(email);
+    }
+
     public List<Customer> seeAllCustomers() {
         return controllerForCustomers.getAllCustomers();
     }

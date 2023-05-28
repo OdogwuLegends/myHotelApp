@@ -24,6 +24,24 @@ public class RepositoryForAdmins implements IAdminRepository{
         }
         return null;
     }
+    public boolean verifyAdminCode(int code){
+        for(Admin foundAdmin : adminRepository){
+            if(Objects.equals(foundAdmin.getAdminLoginCode(),code)) return true;
+        }
+        return false;
+    }
+    public boolean verifyAdminPassword(String password){
+        for (Admin foundAdmin : adminRepository){
+            if(Objects.equals(foundAdmin.getPassword(),password)) return true;
+        }
+        return false;
+    }
+    public boolean verifyAdminByEmail(String email){
+        for (Admin foundAdmin : adminRepository){
+            if(Objects.equals(foundAdmin.getEmail(),email)) return true;
+        }
+        return false;
+    }
 
     @Override
     public List<Admin> getAllAdmins() {

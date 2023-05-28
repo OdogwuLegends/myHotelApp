@@ -9,6 +9,7 @@ import africa.semicoon.LegendaryHotels.models.RoomType;
 import africa.semicoon.LegendaryHotels.utils.Map;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -84,8 +85,8 @@ class RepositoryForReservationsTest {
         Reservation singleRoomCustomer =  buildSingleRoomReservation();
         reservationRepository.reserveARoom(singleRoomCustomer);
 
-        Date checkin = singleRoomCustomer.getCheckIn();
-        Date checkOut = singleRoomCustomer.getCheckOut();
+        LocalDate checkin = singleRoomCustomer.getCheckIn();
+        LocalDate checkOut = singleRoomCustomer.getCheckOut();
 
         response.setMessage("Room 4 checkout Successful. Thank you for your patronage.");
 
@@ -142,21 +143,24 @@ class RepositoryForReservationsTest {
         room.setPrice(20);
         room.setRoomType(SINGLE);
 
-        int checkInDate = 25;
-        int checkInMonth = 5;
-        int checkInYear = 2023;
-        Date checkin = Map.setDate(checkInYear,checkInMonth,checkInDate);
+//        int checkInDate = 25;
+//        int checkInMonth = 5;
+//        int checkInYear = 2023;
+//        Date checkIn = Map.setDate(checkInYear,checkInMonth,checkInDate);
 
-        int checkOutDate = 30;
-        int checkOutMonth = 5;
-        int checkOutYear = 2023;
-        Date checkOut = Map.setDate(checkOutYear,checkOutMonth,checkOutDate);
+//        int checkOutDate = 30;
+//        int checkOutMonth = 5;
+//        int checkOutYear = 2023;
+//        Date checkOut = Map.setDate(checkOutYear,checkOutMonth,checkOutDate);
+
+        LocalDate checkIn = Map.getDateFromUser("25/05/2023");
+        LocalDate checkOut = Map.getDateFromUser("30/05/2023");
 
 
         Reservation customerReservation = new Reservation();
         customerReservation.setCustomer(newCustomer);
         customerReservation.setRoom(room);
-        customerReservation.setCheckIn(checkin);
+        customerReservation.setCheckIn(checkIn);
         customerReservation.setCheckOut(checkOut);
 
         return customerReservation;
@@ -174,15 +178,19 @@ class RepositoryForReservationsTest {
         room.setPrice(50);
         room.setRoomType(DOUBLE);
 
-        int checkInDate = 25;
-        int checkInMonth = 5;
-        int checkInYear = 2023;
-        Date checkin = Map.setDate(checkInYear,checkInMonth,checkInDate);
+//        int checkInDate = 25;
+//        int checkInMonth = 5;
+//        int checkInYear = 2023;
+//        Date checkin = Map.setDate(checkInYear,checkInMonth,checkInDate);
+//
+//        int checkOutDate = 30;
+//        int checkOutMonth = 5;
+//        int checkOutYear = 2023;
+//        Date checkOut = Map.setDate(checkOutYear,checkOutMonth,checkOutDate);
 
-        int checkOutDate = 30;
-        int checkOutMonth = 5;
-        int checkOutYear = 2023;
-        Date checkOut = Map.setDate(checkOutYear,checkOutMonth,checkOutDate);
+        LocalDate checkin = Map.getDateFromUser("25/05/2023");
+        LocalDate checkOut = Map.getDateFromUser("30/05/2023");
+
 
 
         Reservation customerReservation = new Reservation();

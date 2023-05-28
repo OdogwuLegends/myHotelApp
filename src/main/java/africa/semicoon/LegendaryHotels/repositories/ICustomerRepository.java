@@ -10,4 +10,5 @@ public interface ICustomerRepository {
     List<Customer> getAllCustomers();
     void deleteByEmail(String email);
     boolean verifyPassword(String password);
+    boolean verifyCustomerByEmail(String email);
 }

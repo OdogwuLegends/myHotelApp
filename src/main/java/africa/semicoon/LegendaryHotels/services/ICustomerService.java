@@ -16,4 +16,5 @@ public interface ICustomerService {
     ResponseForDelete deleteByEmail(RequestsForCustomers newRequestsForCustomers) throws InvalidEmailException, EntityDoesNotExistException;
     List<Customer> getAllCustomers();
     boolean verifyPassword(String password);
+    boolean verifyCustomerByEmail(String email);
 }

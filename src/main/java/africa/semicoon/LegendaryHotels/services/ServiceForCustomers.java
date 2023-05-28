@@ -78,4 +78,9 @@ public class ServiceForCustomers implements ICustomerService{
         return customerRepository.verifyPassword(password);
     }
 
+    @Override
+    public boolean verifyCustomerByEmail(String email) {
+        return customerRepository.verifyCustomerByEmail(email);
+    }
+
 }

@@ -15,7 +15,6 @@ public interface IReservationService {
     ResponseForRoomBooking findARoom(int roomType);
     ResponseForRoomBooking reserveARoom(RequestsForReservations customerReservation) throws RoomUnavailableException, AmountIncorrectException;
     RoomResponse getRoom(RequestsForReservations customerReservation);
-    ResponseForReservation getCustomerReservation(RequestsForReservations customerReservation);
     ResponseForReservation findReservationByEmail(String email);
     ResponseForRoomBooking checkOut(RequestsForReservations customerReservation) throws InvalidRoomNumberException;
     List<Reservation> findAllReservations();

@@ -12,6 +12,7 @@ import africa.semicoon.LegendaryHotels.models.Room;
 import africa.semicoon.LegendaryHotels.utils.Map;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -56,19 +57,19 @@ class ServiceForReservationsTest {
         assertEquals(responseForReservation,actual);
     }
 
-//    @Test
-//    void testToGetRoom(){
-//        try {
-//            responseForReservation = reservationService.reserveARoom(buildSingleRoomRequest());
-//
-//        } catch(RoomUnavailableException | AmountIncorrectException ex){
-//            System.err.println(ex.getMessage());
-//        }
-//        assertNotNull(responseForReservation);
-//
-//        RoomResponse foundRoom = reservationService.getRoom(buildSingleRoomRequest());
-//
-//    }
+    @Test
+    void testToGetRoom(){
+        try {
+            responseForReservation = reservationService.reserveARoom(buildSingleRoomRequest());
+
+        } catch(RoomUnavailableException | AmountIncorrectException ex){
+            System.err.println(ex.getMessage());
+        }
+        assertNotNull(responseForReservation);
+
+        RoomResponse foundRoom = reservationService.getRoom(buildSingleRoomRequest());
+
+    }
 
 //    @Test
 //    void testToGetCustomerReservation(){
@@ -151,15 +152,21 @@ class ServiceForReservationsTest {
         requestsForReservations.setCustomer(newCustomer);
         requestsForReservations.setRoom(room);
 
-        requestsForReservations.setCheckInDate(25);
-        requestsForReservations.setCheckInMonth(5);
-        requestsForReservations.setCheckInYear(2023);
-        requestsForReservations.setCheckOutDate(30);
-        requestsForReservations.setCheckOutMonth(5);
-        requestsForReservations.setCheckOutYear(2023);
+//        requestsForReservations.setCheckInDate(25);
+//        requestsForReservations.setCheckInMonth(5);
+//        requestsForReservations.setCheckInYear(2023);
+//        requestsForReservations.setCheckOutDate(30);
+//        requestsForReservations.setCheckOutMonth(5);
+//        requestsForReservations.setCheckOutYear(2023);
+//
+//        Date checkIn = Map.setDate(requestsForReservations.getCheckInYear(), requestsForReservations.getCheckInMonth(),requestsForReservations.getCheckInDate());
+//        Date checkOut = Map.setDate(requestsForReservations.getCheckOutYear(),requestsForReservations.getCheckOutMonth(),requestsForReservations.getCheckOutDate());
+//
 
-        Date checkIn = Map.setDate(requestsForReservations.getCheckInYear(), requestsForReservations.getCheckInMonth(),requestsForReservations.getCheckInDate());
-        Date checkOut = Map.setDate(requestsForReservations.getCheckOutYear(),requestsForReservations.getCheckOutMonth(),requestsForReservations.getCheckOutDate());
+        LocalDate checkIn = Map.getDateFromUser("25/05/2023");
+        LocalDate checkOut = Map.getDateFromUser("30/05/2023");
+
+
         Reservation reservation = new Reservation();
         reservation.setCheckIn(checkIn);
         reservation.setCheckOut(checkOut);
@@ -189,15 +196,21 @@ class ServiceForReservationsTest {
         requestsForReservations.setCustomer(newCustomer);
         requestsForReservations.setRoom(room);
 
-        requestsForReservations.setCheckInDate(12);
-        requestsForReservations.setCheckInMonth(6);
-        requestsForReservations.setCheckInYear(2023);
-        requestsForReservations.setCheckOutDate(18);
-        requestsForReservations.setCheckOutMonth(6);
-        requestsForReservations.setCheckOutYear(2023);
+//        requestsForReservations.setCheckInDate(12);
+//        requestsForReservations.setCheckInMonth(6);
+//        requestsForReservations.setCheckInYear(2023);
+//        requestsForReservations.setCheckOutDate(18);
+//        requestsForReservations.setCheckOutMonth(6);
+//        requestsForReservations.setCheckOutYear(2023);
+//
+//        Date checkIn = Map.setDate(requestsForReservations.getCheckInYear(), requestsForReservations.getCheckInMonth(),requestsForReservations.getCheckInDate());
+//        Date checkOut = Map.setDate(requestsForReservations.getCheckOutYear(),requestsForReservations.getCheckOutMonth(),requestsForReservations.getCheckOutDate());
+//
 
-        Date checkIn = Map.setDate(requestsForReservations.getCheckInYear(), requestsForReservations.getCheckInMonth(),requestsForReservations.getCheckInDate());
-        Date checkOut = Map.setDate(requestsForReservations.getCheckOutYear(),requestsForReservations.getCheckOutMonth(),requestsForReservations.getCheckOutDate());
+        LocalDate checkIn = Map.getDateFromUser("25/05/2023");
+        LocalDate checkOut = Map.getDateFromUser("30/05/2023");
+
+
         Reservation reservation = new Reservation();
         reservation.setCheckIn(checkIn);
         reservation.setCheckOut(checkOut);

@@ -15,11 +15,12 @@ import africa.semicoon.LegendaryHotels.repositories.IReservationRepository;
 import africa.semicoon.LegendaryHotels.repositories.RepositoryForReservations;
 import africa.semicoon.LegendaryHotels.utils.Map;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
-import static africa.semicoon.LegendaryHotels.utils.AppUtils.FIFTY_DOLLARS;
-import static africa.semicoon.LegendaryHotels.utils.AppUtils.TWENTY_DOLLARS;
+import static africa.semicoon.LegendaryHotels.utils.AppUtils.*;
+
 
 public class ServiceForReservations implements IReservationService {
 
@@ -69,7 +70,9 @@ public class ServiceForReservations implements IReservationService {
     @Override
     public RoomResponse getRoom(RequestsForReservations customerReservation) {
         int roomNumberChoice = customerReservation.getRoom().getRoomNumber();
+        System.out.println(roomNumberChoice);
         Room foundRoom = repositoryForReservation.getRoom(roomNumberChoice);
+        assert foundRoom != null;
         RoomResponse roomResponse = new RoomResponse();
         roomResponse.setRoomNumber(foundRoom.getRoomNumber());
         roomResponse.setRoomPrice(foundRoom.getPrice());
@@ -78,26 +81,23 @@ public class ServiceForReservations implements IReservationService {
         return roomResponse;
     }
 
-    @Override
-    public ResponseForReservation getCustomerReservation(RequestsForReservations customerReservation) {
-        //String email = customerReservation.getCustomer().getEmail();
-
-        Customer newCustomer = Map.requestToReservation(customerReservation).getCustomer();
-        Reservation foundReservation = repositoryForReservation.getCustomerReservation(newCustomer);
-       //return Map.olaMap(email);
-        return Map.reservationToReservationResponse(foundReservation);
-    }
-
     public ResponseForReservation findReservationByEmail(String email){
-        return Map.reservationToResponse(email);
+        Reservation foundReservation = repositoryForReservation.findReservationByEmail(email);
+
+
+        return Map.reservationToResponse(foundReservation);
     }
 
     @Override
     public ResponseForRoomBooking checkOut(RequestsForReservations customerReservation) throws InvalidRoomNumberException {
         int roomChoiceNumber = customerReservation.getRoom().getRoomNumber();
         RoomType roomType = customerReservation.getRoom().getRoomType();
-        Date checkInDate = Map.setDate(customerReservation.getCheckInDate(), customerReservation.getCheckInMonth(), customerReservation.getCheckInYear());
-        Date checkOutDate = Map.setDate(customerReservation.getCheckOutDate(), customerReservation.getCheckOutMonth(), customerReservation.getCheckOutYear());
+        //Date checkInDate = Map.setDate(customerReservation.getCheckInDate(), customerReservation.getCheckInMonth(), customerReservation.getCheckInYear());
+        //Date checkOutDate = Map.setDate(customerReservation.getCheckOutDate(), customerReservation.getCheckOutMonth(), customerReservation.getCheckOutYear());
+
+
+        LocalDate checkIn = Map.getDateFromUser(customerReservation.getCheckIn());
+        LocalDate checkOut = Map.getDateFromUser(customerReservation.getCheckOut());
 
         if(roomType == RoomType.SINGLE){
             if(roomChoiceNumber < 1 || roomChoiceNumber > 10){
@@ -114,7 +114,7 @@ public class ServiceForReservations implements IReservationService {
                 throw new InvalidRoomNumberException("Room " + roomChoiceNumber + " not booked previously.");
             }
         }
-        return repositoryForReservation.checkOut(checkInDate,checkOutDate);
+        return repositoryForReservation.checkOut(checkIn,checkOut);
     }
 
     @Override

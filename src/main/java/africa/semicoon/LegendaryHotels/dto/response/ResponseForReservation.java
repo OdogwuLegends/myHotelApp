@@ -16,37 +16,22 @@ public class ResponseForReservation {
     @Override
     public String toString(){
         final StringBuffer sb = new StringBuffer();
-        sb.append("\nPlease find your reservation");
-//
-//        for (int i = 0; i < 50; i++) { System.out.print("*"); }
-//        sb.append("\nName:: ").append(customer.getFirstName()).append(" ").append(customer.getLastName());
-//        for (int i = 0; i < 50; i++) { System.out.print("-"); }
-//        sb.append("\nRoom Type - ").append(room.getRoomType()).append(".");
-//        for (int i = 0; i < 50; i++) { System.out.print("-"); }
-//        sb.append("\nRoom Choice - ").append(room.getRoomNumber()).append(".");
-//        for (int i = 0; i < 50; i++) { System.out.print("-"); }
-//        sb.append("\nAmount paid - ").append(room.getPrice()).append(".");
-//        for (int i = 0; i < 50; i++) { System.out.print("-"); }
-//        sb.append("\nCheck in date - ").append(reservation.getCheckIn()).append(".");
-//        for (int i = 0; i < 50; i++) { System.out.print("-"); }
-//        sb.append("\nCheck out date - ").append(reservation.getCheckOut()).append(".");
-//        for (int i = 0; i < 50; i++) { System.out.print("*"); }
+        sb.append("\nPlease find your reservation; ");
 
-
-        for (int i = 0; i < 50; i++) { System.out.print("*"); }
-        sb.append("\nName:: ").append(reservation.getCustomer().getLastName()).append(" ").
+        //for (int i = 0; i < 50; i++) { System.out.print("*"); }
+        sb.append("\nNAME - ").append(reservation.getCustomer().getFirstName()).append(" ").
                 append(reservation.getCustomer().getLastName());
-        for (int i = 0; i < 50; i++) { System.out.print("-"); }
-        sb.append("\nRoom Type - ").append(reservation.getRoom().getRoomType()).append(".");
-        for (int i = 0; i < 50; i++) { System.out.print("-"); }
-        sb.append("\nRoom Choice - ").append(reservation.getRoom().getRoomNumber()).append(".");
-        for (int i = 0; i < 50; i++) { System.out.print("-"); }
-        sb.append("\nAmount paid - ").append(reservation.getRoom().getPrice()).append(".");
-        for (int i = 0; i < 50; i++) { System.out.print("-"); }
-        sb.append("\nCheck in date - ").append(reservation.getCheckIn()).append(".");
-        for (int i = 0; i < 50; i++) { System.out.print("-"); }
-        sb.append("\nCheck out date - ").append(reservation.getCheckOut()).append(".");
-        for (int i = 0; i < 50; i++) { System.out.print("*"); }
+        //for (int i = 0; i < 50; i++) { System.out.print("-"); }
+        sb.append("\nROOM TYPE - ").append(reservation.getRoom().getRoomType());
+        //for (int i = 0; i < 50; i++) { System.out.print("-"); }
+        sb.append("\nROOM CHOICE - ").append(reservation.getRoom().getRoomNumber());
+        //for (int i = 0; i < 50; i++) { System.out.print("-"); }
+        sb.append("\nAMOUNT PAID - $").append(reservation.getRoom().getPrice());
+        //for (int i = 0; i < 50; i++) { System.out.print("-"); }
+        sb.append("\nCHECK IN DATE - ").append(reservation.getCheckIn());
+        //for (int i = 0; i < 50; i++) { System.out.print("-"); }
+        sb.append("\nCHECK OUT DATE - ").append(reservation.getCheckOut()).append("\n");
+        //for (int i = 0; i < 50; i++) { System.out.print("*"); }
 
         return sb.toString();
 
